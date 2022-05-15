@@ -7,6 +7,7 @@ import (
 	"github.com/knadh/koanf/providers/env"
 	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/providers/structs"
+	"github.com/tidwall/pretty"
 	"log"
 	"regexp"
 	"strings"

@@ -8,10 +8,6 @@ import (
 	"go.uber.org/zap/zapcore"
 )
 
-type Logger struct {
-	Logger *zap.Logger
-}
-
 // New create a logger.
 func New(config Config) *zap.Logger {
 	level := prepLoggerLevel(&config) // Setting the zap logger level
