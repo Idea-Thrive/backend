@@ -2,6 +2,8 @@ package config
 
 import (
 	"encoding/json"
+	"github.com/Idea-Thrive/backend/internal/http"
+	"github.com/Idea-Thrive/backend/internal/logger"
 	"github.com/knadh/koanf"
 	"github.com/knadh/koanf/parsers/yaml"
 	"github.com/knadh/koanf/providers/env"
@@ -18,6 +20,8 @@ const (
 )
 
 type Config struct {
+	Http http.Config
+	Log  logger.Config
 }
 
 func Load(path string) Config {
