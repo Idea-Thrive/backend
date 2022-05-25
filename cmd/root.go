@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/Idea-Thrive/backend/internal/cmd/serve"
 	"os"
 
 	"github.com/spf13/cobra"
@@ -12,6 +13,10 @@ func Execute() {
 		Short: "backend of idea-thrive service",
 		Long:  `backend of idea-thrive service`,
 	}
+
+	rootCmd.AddCommand(
+		serve.Command(),
+	)
 
 	err := rootCmd.Execute()
 	if err != nil {
