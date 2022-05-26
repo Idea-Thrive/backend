@@ -40,6 +40,8 @@ issues:
         - dupl
     - path: \.go
       linters:
+        - ireturn
+        - typecheck
         - godox
         - stylecheck
         - maligned
