@@ -1,5 +1,6 @@
 package mysql
 
+// Config struct.
 type Config struct {
 	Host string `koanf:"host"`
 	User string `koanf:"user"`
