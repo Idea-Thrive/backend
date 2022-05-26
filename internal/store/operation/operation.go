@@ -2,6 +2,7 @@ package operation
 
 import (
 	"database/sql"
+
 	"go.uber.org/zap"
 )
 
@@ -12,6 +13,6 @@ type Operation struct {
 }
 
 // NewOperation function.
-func NewOperation(DB *sql.DB, logger *zap.Logger) *Operation {
-	return &Operation{DB: DB, Logger: logger}
+func NewOperation(db *sql.DB, logger *zap.Logger) *Operation {
+	return &Operation{DB: db, Logger: logger}
 }
