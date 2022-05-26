@@ -11,4 +11,4 @@ WORKDIR /app
 COPY --from=build-env /go/src/ideaThrive /app/
 COPY --from=build-env /go/src/ideaThrive/config /app/config
 EXPOSE 8080
-ENTRYPOINT["./ideaThrive"]
+ENTRYPOINT ["./ideaThrive"]
