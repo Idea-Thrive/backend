@@ -35,10 +35,10 @@ func main(cmd *cobra.Command, args []string) {
 	app := fiber.New()
 
 	handler.Authentication{
-		Secret: cfg.Http.Secret,
+		Secret: cfg.HTTP.Secret,
 		Logger: logger,
 		Store:  str,
 	}.Register(app.Group("/auth"))
 
-	log.Fatal(app.Listen(":" + strconv.Itoa(cfg.Http.Port)))
+	log.Fatal(app.Listen(":" + strconv.Itoa(cfg.HTTP.Port)))
 }
