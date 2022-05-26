@@ -4,12 +4,8 @@ import (
 	"github.com/Idea-Thrive/backend/internal/mysql/operation"
 )
 
-type Operations interface {
-	Login(username, password string) (bool, error)
-}
-
 type Store struct {
-	Operations
+	Operation
 	DB *operation.Operation
 }
 
