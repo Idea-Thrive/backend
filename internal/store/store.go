@@ -1,6 +1,8 @@
 package store
 
-import "github.com/Idea-Thrive/backend/internal/mysql"
+import (
+	"github.com/Idea-Thrive/backend/internal/mysql/operation"
+)
 
 type Operations interface {
 	Login(username, password string) (bool, error)
@@ -8,9 +10,11 @@ type Operations interface {
 
 type Store struct {
 	Operations
-	Connection mysql.Mysql
+	DB *operation.Operation
 }
 
-func NewStore(connection *mysql.Mysql) *Store {
-	return &Store{}
+func NewStore(connection *operation.Operation) *Store {
+	return &Store{
+		DB: connection,
+	}
 }
