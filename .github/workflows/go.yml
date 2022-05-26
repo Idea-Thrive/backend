@@ -20,6 +20,8 @@ jobs:
     
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v3
+      with:
+        - golangci_lint_flags: "--config=.golangci.yml"
 
     - name: Build
       run: go build -v ./...
