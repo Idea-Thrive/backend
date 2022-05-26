@@ -5,11 +5,13 @@ import (
 	"github.com/Idea-Thrive/backend/internal/logger"
 )
 
+// Default function.
 func Default() Config {
 	return Config{
-		Http: http.Config{
+		HTTP: http.Config{
 			Port:   8080,
-			Secret: "jafar"},
+			Secret: "jafar",
+		},
 		Log: logger.Config{Level: "debug"},
 	}
 }

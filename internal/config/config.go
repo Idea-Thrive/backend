@@ -2,6 +2,10 @@ package config
 
 import (
 	"encoding/json"
+	"log"
+	"regexp"
+	"strings"
+
 	"github.com/Idea-Thrive/backend/internal/http"
 	"github.com/Idea-Thrive/backend/internal/logger"
 	"github.com/knadh/koanf"
@@ -10,37 +14,37 @@ import (
 	"github.com/knadh/koanf/providers/file"
 	"github.com/knadh/koanf/providers/structs"
 	"github.com/tidwall/pretty"
-	"log"
-	"regexp"
-	"strings"
 )
 
 const (
+	// PREFIX const.
 	PREFIX = "backend"
 )
 
+// Config struct.
 type Config struct {
-	Http http.Config
+	HTTP http.Config
 	Log  logger.Config
 }
 
+// Load function.
 func Load(path string) Config {
 	var cfg Config
 
-	k := koanf.New(".")
+	knf := koanf.New(".")
 
 	// load default configuration
-	if err := k.Load(structs.Provider(Default(), "koanf"), nil); err != nil {
+	if err := knf.Load(structs.Provider(Default(), "koanf"), nil); err != nil {
 		log.Fatalf("error loading default config: %v", err)
 	}
 
 	// load configuration from file
-	if err := k.Load(file.Provider(path), yaml.Parser()); err != nil {
+	if err := knf.Load(file.Provider(path), yaml.Parser()); err != nil {
 		log.Printf("error loading config.yaml: %v", err)
 	}
 
 	// load environment variables
-	cb := func(key string, value string) (string, interface{}) {
+	cbr := func(key string, value string) (string, interface{}) {
 		finalKey := strings.ReplaceAll(strings.ToLower(strings.TrimPrefix(key, PREFIX)), "__", ".")
 
 		if strings.Contains(value, ",") {
@@ -53,11 +57,11 @@ func Load(path string) Config {
 
 		return finalKey, value
 	}
-	if err := k.Load(env.ProviderWithValue(PREFIX, ".", cb), nil); err != nil {
+	if err := knf.Load(env.ProviderWithValue(PREFIX, ".", cbr), nil); err != nil {
 		log.Printf("error loading environment variables: %v", err)
 	}
 
-	if err := k.Unmarshal("", &cfg); err != nil {
+	if err := knf.Unmarshal("", &cfg); err != nil {
 		log.Fatalf("error unmarshaling config: %v", err)
 	}
 
