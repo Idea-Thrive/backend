@@ -10,11 +10,6 @@ type Operation struct {
 	Logger *zap.Logger
 }
 
-func (u *Operation) Login(username, password string) (bool, error) {
-	//TODO implement me
-	panic("implement me")
-}
-
 func NewOperation(DB *sql.DB, logger *zap.Logger) *Operation {
 	return &Operation{DB: DB, Logger: logger}
 }
