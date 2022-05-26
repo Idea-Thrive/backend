@@ -7,24 +7,8 @@ import (
 	"go.uber.org/zap"
 )
 
-// CreateDataSource .
-func CreateDataSource(host, user, pass, port, name string) string {
-	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, pass, host, port, name)
-}
-
-// Mysql .
-type Mysql struct {
-	DB  *sql.DB
-	Log *zap.SugaredLogger
-}
-
-// NewMysql , Create new Mysql .
-func NewMysql(db *sql.DB, log *zap.SugaredLogger) *Mysql {
-	return &Mysql{DB: db, Log: log}
-}
-
-// CreateConnection .
-func CreateConnection(cfg *Config, log *zap.SugaredLogger) (db *sql.DB, err error) {
+// New .
+func New(cfg *Config, log *zap.SugaredLogger) (db *sql.DB, err error) {
 	db, err = sql.Open("mysql", CreateDataSource(cfg.Host, cfg.User, cfg.Pass, cfg.Port, cfg.Name))
 	if err != nil {
 		log.Fatal("error while connecting to mysql",
@@ -49,4 +33,9 @@ func CreateConnection(cfg *Config, log *zap.SugaredLogger) (db *sql.DB, err erro
 	cancel()
 
 	return db, err //nolint:wrapcheck
+}
+
+// CreateDataSource .
+func CreateDataSource(host, user, pass, port, name string) string {
+	return fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", user, pass, host, port, name)
 }
