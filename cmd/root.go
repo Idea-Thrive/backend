@@ -1,12 +1,14 @@
 package cmd
 
 import (
-	"github.com/Idea-Thrive/backend/internal/cmd/serve"
 	"os"
+
+	"github.com/Idea-Thrive/backend/internal/cmd/serve"
 
 	"github.com/spf13/cobra"
 )
 
+// Execute function.
 func Execute() {
 	rootCmd := &cobra.Command{
 		Use:   "backend",
@@ -18,7 +20,7 @@ func Execute() {
 		serve.Command(),
 	)
 
-	err := rootCmd.Execute()
+	err := rootCmd.Execute() //nolint:ifshort
 	if err != nil {
 		os.Exit(1)
 	}
