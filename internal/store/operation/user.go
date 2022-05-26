@@ -8,7 +8,7 @@ import (
 
 var errNotInsertedInUserTable = errors.New("not inserted in user table")
 
-func (u *Operation) Create(user model.User) (err error) {
+func (u *Operation) UserCreate(user model.User) (err error) {
 	queryString := "INSERT INTO User (first_name, last_name, email, phone_number, photo_url, personnel_id, gender, role, created_at, updated_at VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?))"
 
 	result, err := u.DB.Exec(queryString,
