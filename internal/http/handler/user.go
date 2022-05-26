@@ -8,22 +8,25 @@ import (
 	"go.uber.org/zap"
 )
 
+// User struct.
 type User struct {
 	Store  *store.Store
 	Logger *zap.Logger
 }
 
-func (u User) Register(group fiber.Router) {
-	group.Post("/users", u.create)
+// Register function.
+func (usr User) Register(group fiber.Router) {
+	group.Post("/users", usr.Create)
 }
 
-func (u User) create(c *fiber.Ctx) error {
+// Create function.
+func (usr User) Create(cfbr *fiber.Ctx) error {
 	req := new(request.UserCreation)
 
-	if err := c.BodyParser(req); err != nil {
-		u.Logger.Error("failed to parse request body", zap.Error(err))
+	if err := cfbr.BodyParser(req); err != nil {
+		usr.Logger.Error("failed to parse request body", zap.Error(err))
 
-		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return cfbr.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
 			"message": err.Error(),
 		})
 	}
@@ -39,13 +42,13 @@ func (u User) create(c *fiber.Ctx) error {
 		Role:        req.Role,
 	}
 
-	if err := u.Store.UserCreate(user); err != nil {
-		u.Logger.Error("failed to create user", zap.Error(err))
+	if err := usr.Store.UserCreate(user); err != nil {
+		usr.Logger.Error("failed to create user", zap.Error(err))
 
-		return c.Status(fiber.StatusExpectationFailed).JSON(req)
+		return cfbr.Status(fiber.StatusExpectationFailed).JSON(req) //nolint:wrapcheck
 	}
 
-	u.Logger.Info("create user successfully")
+	usr.Logger.Info("create user successfully")
 
-	return c.Status(fiber.StatusOK).JSON(req)
+	return cfbr.Status(fiber.StatusOK).JSON(req) //nolint:wrapcheck
 }
