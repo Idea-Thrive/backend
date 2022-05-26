@@ -2,6 +2,7 @@ package store
 
 import "github.com/Idea-Thrive/backend/internal/model"
 
+// Operation interface.
 type Operation interface {
 	Login(username, password string) (bool, error)
 

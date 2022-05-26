@@ -2,12 +2,15 @@ package operation
 
 import (
 	"errors"
+	"fmt"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"time"
 )
 
+// errNotInsertedInUserTable error.
 var errNotInsertedInUserTable = errors.New("not inserted in user table")
 
+// UserCreate function.
 func (u *Operation) UserCreate(user model.User) (err error) {
 	queryString := "INSERT INTO User (first_name, last_name, email, phone_number, photo_url, personnel_id, gender, role, created_at, updated_at VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?))"
 
@@ -24,7 +27,7 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 	)
 
 	if err != nil {
-		return err
+		return fmt.Errorf("error: %w", err)
 	}
 
 	lid, _ := result.LastInsertId()
@@ -32,5 +35,5 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 		return errNotInsertedInUserTable
 	}
 
-	return err
+	return fmt.Errorf("error: %w", err)
 }
