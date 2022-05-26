@@ -19,8 +19,8 @@ type Authentication struct {
 	Logger *zap.Logger
 }
 
-func (a Authentication) Register(group *fiber.App) {
-	group.Post("/auth/login", a.login)
+func (a Authentication) Register(group fiber.Router) {
+	group.Post("/login", a.login)
 }
 
 func (a *Authentication) login(ctx *fiber.Ctx) error {

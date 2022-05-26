@@ -35,7 +35,7 @@ func main(cmd *cobra.Command, args []string) {
 		Secret: cfg.Http.Secret,
 		Logger: logger,
 		Store:  s,
-	}.Register(app)
+	}.Register(app.Group("/auth"))
 
 	log.Fatal(app.Listen(":" + strconv.Itoa(cfg.Http.Port)))
 }
