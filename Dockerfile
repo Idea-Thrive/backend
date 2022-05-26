@@ -1,14 +1,14 @@
 # build stage
 FROM golang:alpine AS build-env
-RUN apk add --no-cache make git
-COPY . src/ideaThrive
-WORKDIR src/ideaThrive
-RUN make build
+WORKDIR /app
+COPY . /app
+RUN go mod download
+RUN CGO_ENABLED=0 go build -o /backend .
 
 # final stage
 FROM alpine
 WORKDIR /app
-COPY --from=build-env /go/src/ideaThrive /app/
-COPY --from=build-env /go/src/ideaThrive/config /app/config
+COPY --from=build-env /backend /app/
+COPY --from=build-env /backend /app/config
 EXPOSE 8080
-ENTRYPOINT ["./ideaThrive"]
+ENTRYPOINT ["./backend"]
