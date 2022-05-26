@@ -1,0 +1,5 @@
+database:
+  idea_thrive:
+    host: localhost
+    user: root
+    port: 3307
