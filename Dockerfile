@@ -12,3 +12,4 @@ COPY --from=build-env /backend /app/
 COPY --from=build-env /backend /app/config
 EXPOSE 8080
 ENTRYPOINT ["./backend"]
+CMD ["serve"]
