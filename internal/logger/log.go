@@ -27,6 +27,7 @@ func New(config Config) *zap.Logger {
 	return logger
 }
 
+// prepLoggerLevel function.
 func prepLoggerLevel(config *Config) zap.AtomicLevel {
 	var level zapcore.Level
 
