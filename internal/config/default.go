@@ -3,6 +3,7 @@ package config
 import (
 	"github.com/Idea-Thrive/backend/internal/http"
 	"github.com/Idea-Thrive/backend/internal/logger"
+	"github.com/Idea-Thrive/backend/internal/mysql"
 )
 
 // Default function.
@@ -13,5 +14,12 @@ func Default() Config {
 			Secret: "jafar",
 		},
 		Log: logger.Config{Level: "debug"},
+		DB: mysql.Config{
+			Host: "",
+			User: "",
+			Pass: "",
+			Port: "",
+			Name: "",
+		},
 	}
 }

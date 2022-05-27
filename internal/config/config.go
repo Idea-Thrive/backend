@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/json"
+	"github.com/Idea-Thrive/backend/internal/mysql"
 	"log"
 	"regexp"
 	"strings"
@@ -23,8 +24,9 @@ const (
 
 // Config struct.
 type Config struct {
-	HTTP http.Config
-	Log  logger.Config
+	HTTP http.Config   `koanf:"http"`
+	Log  logger.Config `koanf:"log"`
+	DB   mysql.Config  `koanf:"db"`
 }
 
 // Load function.

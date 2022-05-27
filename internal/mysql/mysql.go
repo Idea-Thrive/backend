@@ -9,7 +9,7 @@ import (
 )
 
 // New function.
-func New(cfg *Config, log *zap.SugaredLogger) (db *sql.DB, err error) {
+func New(cfg Config, log *zap.Logger) (db *sql.DB, err error) {
 	db, err = sql.Open("mysql", CreateDataSource(cfg.Host, cfg.User, cfg.Pass, cfg.Port, cfg.Name))
 	if err != nil {
 		log.Fatal("error while connecting to mysql",

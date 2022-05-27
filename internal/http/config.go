@@ -2,6 +2,6 @@ package http
 
 // Config struct.
 type Config struct {
-	Port   int
-	Secret string
+	Port   int    `koanf:"port"`
+	Secret string `koanf:"secret"`
 }
