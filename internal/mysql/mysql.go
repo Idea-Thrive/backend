@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-
+	_ "github.com/go-sql-driver/mysql"
 	"go.uber.org/zap"
 )
 
