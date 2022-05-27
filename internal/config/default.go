@@ -15,11 +15,11 @@ func Default() Config {
 		},
 		Log: logger.Config{Level: "debug"},
 		DB: mysql.Config{
-			Host: "",
-			User: "",
-			Pass: "",
-			Port: "",
-			Name: "",
+			Host: "localhost",
+			User: "root",
+			Pass: "amir_hallaji",
+			Port: "3306",
+			Name: "app",
 		},
 	}
 }
