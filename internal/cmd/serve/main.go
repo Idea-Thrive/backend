@@ -6,6 +6,8 @@ import (
 
 	"github.com/Idea-Thrive/backend/internal/config"
 	"github.com/Idea-Thrive/backend/internal/http/handler"
+	"github.com/Idea-Thrive/backend/internal/http/middleware"
+	"github.com/Idea-Thrive/backend/internal/jwt"
 	"github.com/Idea-Thrive/backend/internal/logger"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
@@ -39,6 +41,11 @@ func main(cmd *cobra.Command, args []string) {
 		Logger: logger,
 		Store:  str,
 	}.Register(app.Group("/auth"))
+
+	handler.User{
+		Store:  str,
+		Logger: logger,
+	}.Register(app.Group("/users", auth.Auth))
 
 	log.Fatal(app.Listen(":" + strconv.Itoa(cfg.HTTP.Port)))
 }

@@ -16,7 +16,7 @@ type User struct {
 
 // Register function.
 func (usr User) Register(group fiber.Router) {
-	group.Post("/users", usr.Create)
+	group.Post("/", usr.Create)
 }
 
 // Create function.
