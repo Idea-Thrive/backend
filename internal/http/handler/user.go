@@ -20,13 +20,13 @@ func (usr User) Register(group fiber.Router) {
 }
 
 // Create function.
-func (usr User) Create(cfbr *fiber.Ctx) error {
+func (usr User) Create(ctx *fiber.Ctx) error {
 	req := new(request.UserCreation)
 
-	if err := cfbr.BodyParser(req); err != nil {
+	if err := ctx.BodyParser(req); err != nil {
 		usr.Logger.Error("failed to parse request body", zap.Error(err))
 
-		return cfbr.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
 			"message": err.Error(),
 		})
 	}
@@ -45,10 +45,10 @@ func (usr User) Create(cfbr *fiber.Ctx) error {
 	if err := usr.Store.UserCreate(user); err != nil {
 		usr.Logger.Error("failed to create user", zap.Error(err))
 
-		return cfbr.Status(fiber.StatusExpectationFailed).JSON(req) //nolint:wrapcheck
+		return ctx.Status(fiber.StatusExpectationFailed).JSON(req) //nolint:wrapcheck
 	}
 
 	usr.Logger.Info("create user successfully")
 
-	return cfbr.Status(fiber.StatusOK).JSON(req) //nolint:wrapcheck
+	return ctx.Status(fiber.StatusOK).JSON(req) //nolint:wrapcheck
 }
