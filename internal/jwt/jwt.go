@@ -1,10 +1,13 @@
 package jwt
 
 import (
+	"errors"
 	"time"
 
 	"github.com/golang-jwt/jwt"
 )
+
+var errInvalidPayload = errors.New("invalid payload")
 
 type JWT struct {
 	Expiration time.Duration
