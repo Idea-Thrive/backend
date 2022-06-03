@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/Idea-Thrive/backend/internal/http"
+	"github.com/Idea-Thrive/backend/internal/jwt"
 	"github.com/Idea-Thrive/backend/internal/logger"
 	"github.com/knadh/koanf"
 	"github.com/knadh/koanf/parsers/yaml"
@@ -24,6 +25,7 @@ const (
 // Config struct.
 type Config struct {
 	HTTP http.Config
+	JWT  jwt.Config
 	Log  logger.Config
 }
 
