@@ -2,7 +2,6 @@ package handler
 
 import (
 	"net/http"
-	"time"
 
 	"github.com/Idea-Thrive/backend/internal/http/request"
 	"github.com/Idea-Thrive/backend/internal/jwt"
@@ -10,9 +9,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 )
-
-// TokeExpiration const.
-const TokeExpiration = 60 * 24 * time.Minute
 
 // Authentication strcut.
 type Authentication struct {

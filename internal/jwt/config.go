@@ -1,5 +1,8 @@
 package jwt
 
+import "time"
+
 type Config struct {
-	Secret string `koanf:"secret"`
+	Expiration time.Duration `koanf:"expiration"`
+	Secret     string        `koanf:"secret"`
 }
