@@ -11,6 +11,10 @@ type JWT struct {
 	Secret     string
 }
 
+func NewJWT(cfg Config) *JWT {
+	return &JWT{Expiration: cfg.Expiration, Secret: cfg.Secret}
+}
+
 func (j JWT) Generate(username string) (string, int64, error) {
 	expirationDate := time.Now().Add(j.Expiration).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
