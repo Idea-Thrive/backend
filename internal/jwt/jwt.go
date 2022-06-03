@@ -36,3 +36,20 @@ func (j JWT) Generate(username string) (string, int64, error) {
 
 	return signedToken, expirationDate, nil
 }
+
+func (j JWT) Verify(token string) (*Payload, error) {
+	keyFunc := func(token *jwt.Token) (interface{}, error) {
+		if token.Method.Alg() != jwt.SigningMethodHS256.Alg() {
+			return nil, jwt.ErrSignatureInvalid
+		}
+
+		return []byte(j.Secret), nil
+	}
+
+	payload := new(Payload)
+	if _, err := jwt.ParseWithClaims(token, payload, keyFunc); err != nil {
+		return nil, err //nolint:wrapcheck
+	}
+
+	return payload, nil
+}
