@@ -36,8 +36,16 @@ func main(cmd *cobra.Command, args []string) {
 
 	app := fiber.New()
 
+	j := jwt.NewJWT(cfg.JWT)
+
+	auth := middleware.Auth{
+		JWT:    j,
+		Logger: logger,
+		Store:  str,
+	}
+
 	handler.Authentication{
-		Secret: cfg.HTTP.Secret,
+		JWT:    j,
 		Logger: logger,
 		Store:  str,
 	}.Register(app.Group("/auth"))

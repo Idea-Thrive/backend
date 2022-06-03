@@ -12,7 +12,7 @@ import (
 
 // Authentication strcut.
 type Authentication struct {
-	JWT    jwt.JWT
+	JWT    *jwt.JWT
 	Store  *store.Store
 	Logger *zap.Logger
 }
