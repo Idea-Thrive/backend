@@ -15,16 +15,18 @@ type User struct {
 }
 
 // Register function.
-func (usr User) Register(group fiber.Router) {
-	group.Post("/", usr.Create)
+func (u User) Register(group fiber.Router) {
+	group.Post("/", u.Create)
+	group.Get("/:id", u.Get)
+	group.Delete("/:id", u.Delete)
 }
 
 // Create function.
-func (usr User) Create(ctx *fiber.Ctx) error {
+func (u User) Create(ctx *fiber.Ctx) error {
 	req := new(request.UserCreation)
 
 	if err := ctx.BodyParser(req); err != nil {
-		usr.Logger.Error("failed to parse request body", zap.Error(err))
+		u.Logger.Error("failed to parse request body", zap.Error(err))
 
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
 			"message": err.Error(),
@@ -42,13 +44,42 @@ func (usr User) Create(ctx *fiber.Ctx) error {
 		Role:        req.Role,
 	}
 
-	if err := usr.Store.UserCreate(user); err != nil {
-		usr.Logger.Error("failed to create user", zap.Error(err))
+	if err := u.Store.UserCreate(user); err != nil {
+		u.Logger.Error("failed to create user", zap.Error(err))
 
 		return ctx.Status(fiber.StatusExpectationFailed).JSON(req) //nolint:wrapcheck
 	}
 
-	usr.Logger.Info("create user successfully")
+	u.Logger.Info("user created successfully")
 
 	return ctx.Status(fiber.StatusOK).JSON(req) //nolint:wrapcheck
+}
+
+func (u User) Get(ctx *fiber.Ctx) error {
+	userID := ctx.Get("id")
+
+	user, err := u.Store.UserGet(userID)
+	if err != nil {
+		u.Logger.Error("failed to get user from store", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(user) //nolint:wrapcheck
+}
+
+func (u User) Delete(ctx *fiber.Ctx) error {
+	userID := ctx.Get("id")
+
+	if err := u.Store.UserDelete(userID); err != nil {
+		u.Logger.Error("failed to delete user")
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
 }
