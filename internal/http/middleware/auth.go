@@ -16,7 +16,15 @@ type Auth struct {
 }
 
 func (a Auth) Auth(ctx *fiber.Ctx) error {
-	token := strings.Split(ctx.Get("Authorization"), " ")[1]
+	auth := ctx.Get("Authorization")
+
+	if len(auth) == 0 {
+		a.Logger.Error("no authorization header")
+
+		return ctx.SendStatus(fiber.StatusUnauthorized) //nolint:wrapcheck
+	}
+
+	token := strings.Split(auth, " ")[1]
 
 	payload, err := a.JWT.Verify(token)
 	if err != nil {
