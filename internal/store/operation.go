@@ -9,4 +9,6 @@ type Operation interface {
 	UserCreate(user model.User) error
 
 	UserGet(id string) (*model.User, error)
+
+	UserDelete(id string) error
 }

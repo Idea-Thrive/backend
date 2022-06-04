@@ -18,6 +18,7 @@ type User struct {
 func (u User) Register(group fiber.Router) {
 	group.Post("/", u.Create)
 	group.Get("/:id", u.Get)
+	group.Delete("/:id", u.Delete)
 }
 
 // Create function.
@@ -67,4 +68,18 @@ func (u User) Get(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(user) //nolint:wrapcheck
+}
+
+func (u User) Delete(ctx *fiber.Ctx) error {
+	userID := ctx.Get("id")
+
+	if err := u.Store.UserDelete(userID); err != nil {
+		u.Logger.Error("failed to delete user")
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
 }
