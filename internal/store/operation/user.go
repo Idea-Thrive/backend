@@ -54,6 +54,5 @@ func (u *Operation) UserGet(id string) (*model.User, error) {
 }
 
 func (u *Operation) UserDelete(id string) error {
-	//TODO implement me
-	panic("implement me")
+	return nil
 }
