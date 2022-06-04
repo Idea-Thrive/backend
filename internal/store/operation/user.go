@@ -13,6 +13,7 @@ var errNotInsertedInUserTable = errors.New("not inserted in user table")
 
 // UserCreate function.
 func (u *Operation) UserCreate(user model.User) (err error) {
+	return nil
 	queryString := "INSERT INTO User (first_name, last_name, email, phone_number, photo_url, personnel_id," +
 		" gender, role, created_at, updated_at VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?))"
 
