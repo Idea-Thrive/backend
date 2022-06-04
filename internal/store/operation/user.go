@@ -38,3 +38,16 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 
 	return fmt.Errorf("error: %w", err)
 }
+
+func (u *Operation) UserGet(id string) (*model.User, error) {
+	return &model.User{
+		FirstName:   "test-first",
+		LastName:    "test-last",
+		Email:       "test@gmail.com",
+		PhoneNumber: "1234567",
+		PhotoURL:    "",
+		PersonnelID: "1234",
+		Gender:      "male",
+		Role:        "employee",
+	}, nil
+}

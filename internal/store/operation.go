@@ -7,4 +7,6 @@ type Operation interface {
 	Login(username, password string) (bool, error)
 
 	UserCreate(user model.User) error
+
+	UserGet(id string) (*model.User, error)
 }
