@@ -71,3 +71,17 @@ func (c Comment) GetAll(ctx *fiber.Ctx) error {
 
 	return ctx.JSON(comments)
 }
+
+func (c Comment) Delete(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	if err := c.Store.CommentDelete(id); err != nil {
+		c.Logger.Error("failed to delete comment", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent)
+}
