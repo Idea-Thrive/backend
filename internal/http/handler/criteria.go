@@ -55,3 +55,17 @@ func (c Criteria) GetAll(ctx *fiber.Ctx) error {
 
 	return ctx.JSON(criteria)
 }
+
+func (c Criteria) Delete(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	if err := c.Store.CriteriaDelete(id); err != nil {
+		c.Logger.Error("failed to delete criteria", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent)
+}
