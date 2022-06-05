@@ -11,6 +11,7 @@ var (
 	errNotInsertedInCompanyTable = errors.New("not inserted in company table")
 )
 
+// CompanyCreate function.
 func (u *Operation) CompanyCreate(company model.Company) error {
 	currCompanyID := ""
 	errRetrieve := u.DB.QueryRow("SELECT `company_id` FROM `Company` WHERE `company_id` = ?",
@@ -50,4 +51,28 @@ func (u *Operation) CompanyCreate(company model.Company) error {
 	}
 
 	return nil
+}
+
+// CompanyGet function.
+func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
+	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `logo_url`, `owner_national_id`, "+
+		"`owner_first_name`, `owner_last_name` FROM `Company` WHERE `id` = ?", id).Scan(
+		&company.CompanyID,
+		&company.LogoURL,
+		&company.OwnerNationalID,
+		&company.OwnerFirstName,
+		&company.OwnerLastName,
+	)
+
+	if errRetrieve != nil {
+		return model.Company{}, errNoRecordFound
+	}
+
+	return model.Company{
+		Name:            company.CompanyID,
+		LogoURL:         company.LogoURL,
+		OwnerNationalID: company.OwnerNationalID,
+		OwnerFirstName:  company.OwnerFirstName,
+		OwnerLastName:   company.OwnerLastName,
+	}, nil
 }
