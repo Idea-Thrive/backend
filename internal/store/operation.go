@@ -24,4 +24,8 @@ type Operation interface {
 	CategoryGet(id string) (*model.Category, error)
 	CategoryGetAll(companyID string) ([]model.Category, error)
 	CategoryDelete(id string) error
+
+	CriteriaCreate(criteria model.Criteria) error
+	CriteriaGetAll(categoryID string) ([]model.Criteria, error)
+	CriteriaDelete(id string) error
 }
