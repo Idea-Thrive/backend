@@ -16,6 +16,7 @@ type Category struct {
 func (c Category) Register(group fiber.Router) {
 	group.Post("/", c.Create)
 	group.Get("/:id", c.Get)
+	group.Delete("/:id", c.Delete)
 }
 
 func (c Category) Create(ctx *fiber.Ctx) error {
@@ -53,4 +54,18 @@ func (c Category) Get(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.JSON(category)
+}
+
+func (c Category) Delete(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	if err := c.Store.CategoryDelete(id); err != nil {
+		c.Logger.Error("failed to delete category", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent)
 }
