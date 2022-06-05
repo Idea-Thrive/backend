@@ -50,18 +50,6 @@ func (u *Operation) CategoryDelete(id string) error {
 	return nil
 }
 
-func (u *Operation) CompanyGet(id string) (*model.Company, error) {
-	return &model.Company{
-		Name:            "test company",
-		LogoURL:         "url",
-		OwnerNationalID: "2520202020202",
-		OwnerFirstName:  "test-first",
-		OwnerLastName:   "test-last",
-		CreatedAt:       time.Now(),
-		UpdatedAt:       time.Now(),
-	}, nil
-}
-
 func (u *Operation) CompanyDelete(id string) error {
 	return nil
 }
