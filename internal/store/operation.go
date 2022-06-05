@@ -19,4 +19,9 @@ type Operation interface {
 	CompanyCreate(company model.Company) error
 	CompanyGet(id string) (*model.Company, error)
 	CompanyDelete(id string) error
+
+	CategoryCreate(category model.Category) error
+	CategoryGet(id string) (*model.Category, error)
+	CategoryGetAll(companyID string) ([]model.Category, error)
+	CategoryDelete(id string) error
 }

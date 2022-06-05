@@ -5,8 +5,7 @@ import (
 	"strconv"
 
 	"github.com/Idea-Thrive/backend/internal/config"
-	"github.com/Idea-Thrive/backend/internal/http/handler"
-	"github.com/Idea-Thrive/backend/internal/http/middleware"
+	"github.com/Idea-Thrive/backend/internal/http"
 	"github.com/Idea-Thrive/backend/internal/jwt"
 	"github.com/Idea-Thrive/backend/internal/logger"
 	"github.com/Idea-Thrive/backend/internal/mysql"
@@ -47,32 +46,11 @@ func main(cmd *cobra.Command, args []string) {
 
 	j := jwt.NewJWT(cfg.JWT)
 
-	auth := middleware.Auth{
+	http.App{
 		JWT:    j,
-		Logger: logger,
-		Store:  str,
-	}
-
-	handler.Authentication{
-		JWT:    j,
-		Logger: logger,
-		Store:  str,
-	}.Register(app.Group("/auth"))
-
-	handler.User{
 		Store:  str,
 		Logger: logger,
-	}.Register(app.Group("/users", auth.Auth))
-
-	handler.Idea{
-		Store:  str,
-		Logger: logger,
-	}.Register(app.Group("/ideas", auth.Auth))
-
-	handler.Company{
-		Store:  str,
-		Logger: logger,
-	}.Register(app.Group("/companies", auth.Auth))
+	}.Register(app)
 
 	log.Fatal(app.Listen(":" + strconv.Itoa(cfg.HTTP.Port)))
 }
