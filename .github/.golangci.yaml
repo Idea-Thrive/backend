@@ -14,14 +14,10 @@ linters-settings:
     # See https://github.com/tomarrell/wrapcheck#configuration for more information.
     ignoreSigs:
       - .Errorf(
-      - errors.New(
-      - .Wrap(
-      - .Wrapf(
-      - .WithMessage(
-      - .WithMessagef(
-      - .WithStack(
       - .SendString(
       - .Next(
+      - .JSON(
+      - .SendStatus(
   revive:
     rules:
       # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#exported
