@@ -40,3 +40,18 @@ func (c Criteria) Create(ctx *fiber.Ctx) error {
 
 	return ctx.SendStatus(fiber.StatusCreated)
 }
+
+func (c Criteria) GetAll(ctx *fiber.Ctx) error {
+	categoryID := ctx.Params("category_id")
+
+	criteria, err := c.Store.CriteriaGetAll(categoryID)
+	if err != nil {
+		c.Logger.Error("failed to get criteria", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.JSON(criteria)
+}
