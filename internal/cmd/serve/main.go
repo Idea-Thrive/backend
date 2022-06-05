@@ -55,5 +55,10 @@ func main(cmd *cobra.Command, args []string) {
 		Logger: logger,
 	}.Register(app.Group("/users", auth.Auth))
 
+	handler.Idea{
+		Store:  str,
+		Logger: logger,
+	}.Register(app.Group("/ideas", auth.Auth))
+
 	log.Fatal(app.Listen(":" + strconv.Itoa(cfg.HTTP.Port)))
 }
