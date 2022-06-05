@@ -16,6 +16,7 @@ type Category struct {
 func (c Category) Register(group fiber.Router) {
 	group.Post("/", c.Create)
 	group.Get("/:id", c.Get)
+	group.Get("/", c.GetAll)
 	group.Delete("/:id", c.Delete)
 }
 
@@ -54,6 +55,29 @@ func (c Category) Get(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.JSON(category)
+}
+
+func (c Category) GetAll(ctx *fiber.Ctx) error {
+	companyID := ctx.Query("company_id")
+
+	if len(companyID) == 0 {
+		c.Logger.Error("company_id is required")
+
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "company_id is required",
+		})
+	}
+
+	categories, err := c.Store.CategoryGetAll(companyID)
+	if err != nil {
+		c.Logger.Error("failed to get categories", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.JSON(categories)
 }
 
 func (c Category) Delete(ctx *fiber.Ctx) error {
