@@ -17,7 +17,7 @@ type Company struct {
 // Register function.
 func (c Company) Register(group fiber.Router) {
 	group.Post("/", c.Create)
-
+	group.Get("/:id", c.Get)
 }
 
 func (c Company) Create(ctx *fiber.Ctx) error {
@@ -43,4 +43,19 @@ func (c Company) Create(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.SendStatus(fiber.StatusOK)
+}
+
+func (c Company) Get(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	company, err := c.Store.CompanyGet(id)
+	if err != nil {
+		c.Logger.Error("failed to get company", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.JSON(company)
 }
