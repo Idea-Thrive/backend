@@ -1,0 +1,596 @@
+{
+	"info": {
+		"_postman_id": "37e43a27-784a-460b-8557-3db317c19cb5",
+		"name": "Idea Thrive Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"mehdi\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADDRESS}}/auth/login",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"mehdi\",\n    \"password\": \"12345\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8080/auth/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8080",
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Fri, 03 Jun 2022 05:40:42 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "165"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"expiration\": 1654321243,\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQzMjEyNDMsInN1YmplY3QiOiJtZWhkaSJ9.M6Y2gVuKvGvWtgEOswL7msPGlrLvT2VdtQysFq-XZQU\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNFQxNjo0MToxMC45MjUwMTkyNzErMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NDMxMDcwfQ.Cz-snk2J3jvJqOR_SBQH-xoVTgqKg15UylxuL1MdgvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"first_name\": \"test\",\n    \"last_name\": \"test-last\",\n    \"email\": \"email@gmail.com\",\n    \"phone_number\": \"123456789\",\n    \"photo_url\": \"\",\n    \"personnel_id\": \"12354\",\n    \"gender\": \"male\",\n    \"role\": \"employee\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADDRESS}}/users",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"first_name\": \"test\",\n    \"last_name\": \"test-last\",\n    \"email\": \"email@gmail.com\",\n    \"phone_number\": \"123456789\",\n    \"photo_url\": \"\",\n    \"personnel_id\": \"12354\",\n    \"gender\": \"male\",\n    \"role\": \"employee\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ADDRESS}}/users",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 04 Jun 2022 12:11:21 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "170"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"first_name\": \"test\",\n    \"last_name\": \"test-last\",\n    \"email\": \"email@gmail.com\",\n    \"phone_number\": \"123456789\",\n    \"photo_url\": \"\",\n    \"personnel_id\": \"12354\",\n    \"gender\": \"male\",\n    \"role\": \"employee\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNFQxNjo0MToxMC45MjUwMTkyNzErMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NDMxMDcwfQ.Cz-snk2J3jvJqOR_SBQH-xoVTgqKg15UylxuL1MdgvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/users/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/users/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 04 Jun 2022 12:15:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "172"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"first_name\": \"test-first\",\n    \"last_name\": \"test-last\",\n    \"email\": \"test@gmail.com\",\n    \"phone_number\": \"1234567\",\n    \"photo_url\": \"\",\n    \"personnel_id\": \"1234\",\n    \"gender\": \"male\",\n    \"role\": \"employee\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNFQxNjo0MToxMC45MjUwMTkyNzErMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NDMxMDcwfQ.Cz-snk2J3jvJqOR_SBQH-xoVTgqKg15UylxuL1MdgvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/users/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"users",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/users/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"users",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sat, 04 Jun 2022 12:17:01 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Idea",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNFQxNjo0MToxMC45MjUwMTkyNzErMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NDMxMDcwfQ.Cz-snk2J3jvJqOR_SBQH-xoVTgqKg15UylxuL1MdgvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\": \"idea title\",\n    \"category\": \"idea category\",\n    \"description\": \"nice description\",\n    \"up_vote_count\": 0,\n    \"down_vote_count\": 0,\n    \"creator_id\": \"123123\",\n    \"company_id\": \"12312312\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADDRESS}}/ideas",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"ideas"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"title\": \"idea title\",\n    \"category\": \"idea category\",\n    \"description\": \"nice description\",\n    \"up_vote_count\": 0,\n    \"down_vote_count\": 0,\n    \"creator_id\": \"123123\",\n    \"company_id\": \"12312312\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ADDRESS}}/ideas",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"ideas"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 06:28:13 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2"
+								}
+							],
+							"cookie": [],
+							"body": "OK"
+						}
+					]
+				},
+				{
+					"name": "Get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNFQxNjo0MToxMC45MjUwMTkyNzErMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NDMxMDcwfQ.Cz-snk2J3jvJqOR_SBQH-xoVTgqKg15UylxuL1MdgvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/ideas/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"ideas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/ideas/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"ideas",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 06:28:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "274"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"good idea\",\n    \"category\": \"others\",\n    \"description\": \"this is a very good idea\",\n    \"up_vote_count\": 10,\n    \"down_vote_count\": -5,\n    \"creator_id\": \"hassan\",\n    \"company_id\": \"good-company\",\n    \"created_at\": \"2022-06-05T10:58:04.639968937+04:30\",\n    \"updated_at\": \"2022-06-05T10:58:04.639968994+04:30\"\n}"
+						}
+					]
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNFQxNjo0MToxMC45MjUwMTkyNzErMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NDMxMDcwfQ.Cz-snk2J3jvJqOR_SBQH-xoVTgqKg15UylxuL1MdgvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/ideas?company_id=123&category=jafar&size=20&offset=0",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"ideas"
+							],
+							"query": [
+								{
+									"key": "company_id",
+									"value": "123",
+									"description": "required"
+								},
+								{
+									"key": "category",
+									"value": "jafar",
+									"description": "optional"
+								},
+								{
+									"key": "size",
+									"value": "20",
+									"description": "optional"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "optional"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNFQxNjo0MToxMC45MjUwMTkyNzErMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NDMxMDcwfQ.Cz-snk2J3jvJqOR_SBQH-xoVTgqKg15UylxuL1MdgvE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/ideas/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"ideas",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ADDRESS",
+			"value": "http://127.0.0.1:8080"
+		}
+	]
+}
