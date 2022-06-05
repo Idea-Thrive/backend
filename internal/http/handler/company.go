@@ -27,7 +27,7 @@ func (c Company) Create(ctx *fiber.Ctx) error {
 	if err := ctx.BodyParser(company); err != nil {
 		c.Logger.Error("failed to parse company", zap.Error(err))
 
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": err.Error(),
 		})
 	}
@@ -38,12 +38,12 @@ func (c Company) Create(ctx *fiber.Ctx) error {
 	if err := c.Store.CompanyCreate(*company); err != nil {
 		c.Logger.Error("failed to create company", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusOK)
+	return ctx.SendStatus(fiber.StatusOK) //nolint:wrapcheck
 }
 
 func (c Company) Get(ctx *fiber.Ctx) error {
@@ -53,12 +53,12 @@ func (c Company) Get(ctx *fiber.Ctx) error {
 	if err != nil {
 		c.Logger.Error("failed to get company", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.JSON(company)
+	return ctx.JSON(company) //nolint:wrapcheck
 }
 
 func (c Company) Delete(ctx *fiber.Ctx) error {
@@ -67,10 +67,10 @@ func (c Company) Delete(ctx *fiber.Ctx) error {
 	if err := c.Store.CompanyDelete(id); err != nil {
 		c.Logger.Error("failed to delete company", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent)
+	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
 }
