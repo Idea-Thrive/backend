@@ -2,7 +2,6 @@ package operation
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/Idea-Thrive/backend/internal/model"
@@ -15,8 +14,10 @@ var (
 	errUserAlreadyExistsInTable = errors.New("user already exists in user table")
 	// errNoRecordFound error.
 	errNoRecordFound = errors.New("no record found for this user")
-	// errNoRowsAffected
+	// errNoRowsAffected error.
 	errNoRowsAffected = errors.New("no rows affected")
+	// errNoRowsUpdated error.
+	errNoRowsUpdated = errors.New("no rows updated")
 )
 
 // UserCreate function.
@@ -52,7 +53,7 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 		time.Now(),
 	)
 	if err != nil {
-		return fmt.Errorf("error: %w", err)
+		return err //nolint:wrapcheck
 	}
 
 	lid, _ := result.LastInsertId()
@@ -97,6 +98,42 @@ func (u *Operation) UserGet(id string) (user model.User, err error) {
 	}, nil
 }
 
+// UserUpdate function.
+func (u *Operation) UserUpdate(id string, user model.User) error {
+
+	queryString := "UPDATE `User` SET `updated_at` = ?, `first_name` = ?, `last_name` = ?, `email` = ?, `phone_number` = ?," +
+		" `photo_url` = ?, `company_id` = ?, `personnel_id` = ?, `gender` = ?, `role` = ? WHERE `id` = ?"
+
+	res, err := u.DB.Exec(queryString,
+		time.Now(),
+		user.FirstName,
+		user.LastName,
+		user.Email,
+		user.PhoneNumber,
+		user.PhotoURL,
+		user.CompanyID,
+		user.PersonnelID,
+		user.Gender,
+		user.Role,
+		id,
+	)
+	if err != nil {
+		err = errNoRowsUpdated
+
+		return err
+	}
+
+	rAffected, err := res.RowsAffected()
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return errNoRowsAffected
+	}
+
+	return nil
+}
+
+// UserDelete function.
 func (u *Operation) UserDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `User` WHERE `id` = ?", id)
 
@@ -110,5 +147,5 @@ func (u *Operation) UserDelete(id string) error {
 
 		return err
 	}
-	return err
+	return nil
 }
