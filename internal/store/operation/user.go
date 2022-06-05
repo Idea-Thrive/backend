@@ -23,6 +23,8 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 
 	if currEmail == user.Email {
 		err = errUserAlreadyExistsInTable
+
+		return err
 	}
 
 	if errRetrieve != nil {
@@ -52,6 +54,8 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 	lid, _ := result.LastInsertId()
 	if lid == 0 {
 		err = errNotInsertedInUserTable
+
+		return err
 	}
 
 	return err
