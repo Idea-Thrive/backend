@@ -65,10 +65,20 @@ func (i Idea) Get(ctx *fiber.Ctx) error {
 }
 
 func (i Idea) GetAll(ctx *fiber.Ctx) error {
-	size, _ := strconv.Atoi(ctx.Query("size", "100"))
-	offset, _ := strconv.Atoi(ctx.Query("offset", "0"))
+	size, _ := strconv.Atoi(ctx.Query("size", "100"))   // optional
+	offset, _ := strconv.Atoi(ctx.Query("offset", "0")) // optional
+	category := ctx.Query("category")                   // optional
+	companyID := ctx.Query("company_id")                // required
 
-	ideas, err := i.Store.IdeaGetAll(size, offset)
+	if len(companyID) == 0 {
+		i.Logger.Warn("company_id cannot be null")
+
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "company_id cannot be null",
+		}) //nolint:wrapcheck
+	}
+
+	ideas, err := i.Store.IdeaGetAll(companyID, category, size, offset)
 	if err != nil {
 		i.Logger.Error("failed to get ideas", zap.Error(err))
 
