@@ -7,9 +7,7 @@ type Operation interface {
 	Login(username, password string) (bool, error)
 
 	UserCreate(user model.User) error
-
-	UserGet(id string) (*model.User, error)
-
+	UserGet(id string) (user model.User, err error)
 	UserDelete(id string) error
 
 	IdeaCreate(idea model.Idea) error

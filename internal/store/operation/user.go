@@ -13,6 +13,10 @@ var (
 	errNotInsertedInUserTable = errors.New("not inserted in user table")
 	// errUserAlreadyExistsInTable error.
 	errUserAlreadyExistsInTable = errors.New("user already exists in user table")
+	// errNoRecordFound error.
+	errNoRecordFound = errors.New("no record found for this user")
+	// errNoRowsAffected
+	errNoRowsAffected = errors.New("no rows affected")
 )
 
 // UserCreate function.
@@ -31,8 +35,8 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 		u.Logger.Error("user with this email doesn't exist")
 	}
 
-	queryString := "INSERT INTO User (first_name, last_name, email, phone_number, photo_url, company_id, personnel_id," +
-		" gender, role, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	queryString := "INSERT INTO `User` (`first_name`, `last_name`, `email`, `phone_number`, `photo_url`, `company_id`, `personnel_id`," +
+		" `gender`, `role`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
 		user.FirstName,
@@ -61,19 +65,50 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 	return err
 }
 
-func (u *Operation) UserGet(id string) (*model.User, error) {
-	return &model.User{
-		FirstName:   "test-first",
-		LastName:    "test-last",
-		Email:       "test@gmail.com",
-		PhoneNumber: "1234567",
-		PhotoURL:    "",
-		PersonnelID: "1234",
-		Gender:      "male",
-		Role:        "employee",
+// UserGet function.
+func (u *Operation) UserGet(id string) (user model.User, err error) {
+	errRetrieve := u.DB.QueryRow("SELECT `first_name`, `last_name`,"+
+		" `email`, `phone_number`, `photo_url`, `company_id`, `personnel_id`, `gender`, `role` FROM `User` WHERE `id` = ?", id).Scan(
+		&user.FirstName,
+		&user.LastName,
+		&user.Email,
+		&user.PhoneNumber,
+		&user.PhotoURL,
+		&user.CompanyID,
+		&user.PersonnelID,
+		&user.Gender,
+		&user.Role,
+	)
+
+	if errRetrieve != nil {
+		return model.User{}, errNoRecordFound
+	}
+
+	return model.User{
+		FirstName:   user.FirstName,
+		LastName:    user.LastName,
+		Email:       user.Email,
+		PhoneNumber: user.PhoneNumber,
+		PhotoURL:    user.PhotoURL,
+		CompanyID:   user.CompanyID,
+		PersonnelID: user.PersonnelID,
+		Gender:      user.Gender,
+		Role:        user.Role,
 	}, nil
 }
 
 func (u *Operation) UserDelete(id string) error {
-	return nil
+	exec, err := u.DB.Exec("DELETE FROM `User` WHERE `id` = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, _ := exec.RowsAffected()
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+	return err
 }
