@@ -32,7 +32,7 @@ func (u *Operation) CategoryGet(id string) (*model.Category, error) {
 	}, nil
 }
 
-func (u *Operation) CategoryGetAll(companyID, id string) ([]model.Category, error) {
+func (u *Operation) CategoryGetAll(companyID string) ([]model.Category, error) {
 	category := model.Category{
 		Name:        "test-category",
 		Description: "this is a test description",

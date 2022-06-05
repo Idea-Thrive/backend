@@ -23,6 +23,6 @@ type Operation interface {
 
 	CategoryCreate(category model.Category) error
 	CategoryGet(id string) (*model.Category, error)
-	CategoryGetAll(companyID, id string) ([]model.Category, error)
+	CategoryGetAll(companyID string) ([]model.Category, error)
 	CategoryDelete(id string) error
 }
