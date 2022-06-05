@@ -39,7 +39,7 @@ func (c Category) Create(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusCreated)
+	return ctx.SendStatus(fiber.StatusCreated) //nolint:wrapcheck
 }
 
 func (c Category) Get(ctx *fiber.Ctx) error {
@@ -54,7 +54,7 @@ func (c Category) Get(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.JSON(category)
+	return ctx.JSON(category) //nolint:wrapcheck
 }
 
 func (c Category) GetAll(ctx *fiber.Ctx) error {
@@ -63,7 +63,7 @@ func (c Category) GetAll(ctx *fiber.Ctx) error {
 	if len(companyID) == 0 {
 		c.Logger.Error("company_id is required")
 
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": "company_id is required",
 		})
 	}
@@ -72,12 +72,12 @@ func (c Category) GetAll(ctx *fiber.Ctx) error {
 	if err != nil {
 		c.Logger.Error("failed to get categories", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.JSON(categories)
+	return ctx.JSON(categories) //nolint:wrapcheck
 }
 
 func (c Category) Delete(ctx *fiber.Ctx) error {
@@ -86,10 +86,10 @@ func (c Category) Delete(ctx *fiber.Ctx) error {
 	if err := c.Store.CategoryDelete(id); err != nil {
 		c.Logger.Error("failed to delete category", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent)
+	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
 }
