@@ -20,7 +20,7 @@ var (
 // UserCreate function.
 func (u *Operation) UserCreate(user model.User) (err error) {
 	return nil
-	currEmail := ""
+	currEmail := "" //nolint:govet
 	errRetrieve := u.DB.QueryRow("SELECT email from User WHERE email = ?", user.Email).Scan(&currEmail)
 
 	if errRetrieve != nil {
@@ -56,7 +56,7 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 		return errNotInsertedInUserTable
 	}
 
-	return fmt.Errorf("error: %w", err)
+	return err
 }
 
 func (u *Operation) UserGet(id string) (*model.User, error) {

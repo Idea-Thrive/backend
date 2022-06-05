@@ -56,6 +56,7 @@ func (u User) Create(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(req) //nolint:wrapcheck
 }
 
+// Get function.
 func (u User) Get(ctx *fiber.Ctx) error {
 	userID := ctx.Get("id")
 
@@ -71,6 +72,7 @@ func (u User) Get(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(user) //nolint:wrapcheck
 }
 
+// Delete function.
 func (u User) Delete(ctx *fiber.Ctx) error {
 	userID := ctx.Get("id")
 
