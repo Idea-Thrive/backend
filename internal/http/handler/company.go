@@ -1,12 +1,12 @@
 package handler
 
 import (
-	"time"
-
+	"github.com/Idea-Thrive/backend/internal/http/request"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
+	"time"
 )
 
 type Company struct {
@@ -22,20 +22,28 @@ func (c Company) Register(group fiber.Router) {
 }
 
 func (c Company) Create(ctx *fiber.Ctx) error {
-	company := new(model.Company)
+	req := new(request.CompanyCreation)
 
-	if err := ctx.BodyParser(company); err != nil {
-		c.Logger.Error("failed to parse company", zap.Error(err))
+	if err := ctx.BodyParser(req); err != nil {
+		c.Logger.Error("failed to parse req", zap.Error(err))
 
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": err.Error(),
 		})
 	}
 
-	company.CreatedAt = time.Now()
-	company.UpdatedAt = time.Now()
+	company := model.Company{
+		CompanyID:       req.CompanyID,
+		Name:            req.Name,
+		LogoURL:         req.LogoURL,
+		OwnerNationalID: req.OwnerNationalID,
+		OwnerFirstName:  req.OwnerFirstName,
+		OwnerLastName:   req.OwnerLastName,
+		CreatedAt:       time.Now(),
+		UpdatedAt:       time.Now(),
+	}
 
-	if err := c.Store.CompanyCreate(*company); err != nil {
+	if err := c.Store.CompanyCreate(company); err != nil {
 		c.Logger.Error("failed to create company", zap.Error(err))
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
