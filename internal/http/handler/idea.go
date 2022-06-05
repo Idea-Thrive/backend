@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
@@ -14,5 +15,27 @@ type Idea struct {
 
 // Register function.
 func (i Idea) Register(group fiber.Router) {
+	group.Post("/", i.Create)
+}
 
+func (i Idea) Create(ctx *fiber.Ctx) error {
+	idea := new(model.Idea)
+
+	if err := ctx.BodyParser(&idea); err != nil {
+		i.Logger.Error("failed to parse body", zap.Error(err))
+
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "failed to parse body",
+		}) //nolint:wrapcheck
+	}
+
+	if err := i.Store.IdeaCreate(*idea); err != nil {
+		i.Logger.Error("failed to create idea", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "failed to create idea",
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.SendStatus(fiber.StatusOK)
 }
