@@ -16,6 +16,7 @@ type Idea struct {
 // Register function.
 func (i Idea) Register(group fiber.Router) {
 	group.Post("/", i.Create)
+	group.Get("/:id", i.Get)
 }
 
 func (i Idea) Create(ctx *fiber.Ctx) error {
@@ -38,4 +39,19 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.SendStatus(fiber.StatusOK)
+}
+
+func (i Idea) Get(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	idea, err := i.Store.IdeaGet(id)
+	if err != nil {
+		i.Logger.Error("failed to get idea", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "failed to get idea",
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(idea)
 }
