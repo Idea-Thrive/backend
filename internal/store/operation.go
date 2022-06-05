@@ -28,4 +28,8 @@ type Operation interface {
 	CriteriaCreate(criteria model.Criteria) error
 	CriteriaGetAll(categoryID string) ([]model.Criteria, error)
 	CriteriaDelete(id string) error
+
+	CommentCreate(comment model.Comment) error
+	CommentGetAll(ideaID string, scoreOnly bool, size, offset int) ([]model.Comment, error)
+	CommentDelete(id string) error
 }
