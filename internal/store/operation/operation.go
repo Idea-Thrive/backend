@@ -50,10 +50,6 @@ func (u *Operation) CategoryDelete(id string) error {
 	return nil
 }
 
-func (u *Operation) CompanyCreate(company model.Company) error {
-	return nil
-}
-
 func (u *Operation) CompanyGet(id string) (*model.Company, error) {
 	return &model.Company{
 		Name:            "test company",
