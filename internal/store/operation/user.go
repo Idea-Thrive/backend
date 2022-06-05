@@ -51,7 +51,7 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 
 	lid, _ := result.LastInsertId()
 	if lid == 0 {
-		return errNotInsertedInUserTable
+		err = errNotInsertedInUserTable
 	}
 
 	return err
