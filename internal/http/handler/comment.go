@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/Idea-Thrive/backend/internal/model"
@@ -43,4 +44,30 @@ func (c Comment) Create(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.SendStatus(fiber.StatusCreated)
+}
+
+func (c Comment) GetAll(ctx *fiber.Ctx) error {
+	size, _ := strconv.Atoi(ctx.Params("size"))                         // optional
+	offset, _ := strconv.Atoi(ctx.Params("offset"))                     // optional
+	scoreOnly, _ := strconv.ParseBool(ctx.Params("scoreOnly", "false")) // optional
+	ideaID := ctx.Params("idea_id")                                     // required
+
+	if len(ideaID) == 0 {
+		c.Logger.Error("idea_id is required")
+
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "idea_id is required",
+		})
+	}
+
+	comments, err := c.Store.CommentGetAll(ideaID, scoreOnly, size, offset)
+	if err != nil {
+		c.Logger.Error("failed to get comments", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.JSON(comments)
 }
