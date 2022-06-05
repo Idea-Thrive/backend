@@ -18,6 +18,7 @@ type Company struct {
 func (c Company) Register(group fiber.Router) {
 	group.Post("/", c.Create)
 	group.Get("/:id", c.Get)
+	group.Delete("/:id", c.Delete)
 }
 
 func (c Company) Create(ctx *fiber.Ctx) error {
@@ -58,4 +59,18 @@ func (c Company) Get(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.JSON(company)
+}
+
+func (c Company) Delete(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	if err := c.Store.CompanyDelete(id); err != nil {
+		c.Logger.Error("failed to delete company", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent)
 }
