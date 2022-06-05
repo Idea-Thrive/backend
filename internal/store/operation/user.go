@@ -18,6 +18,8 @@ var (
 	errNoRowsAffected = errors.New("no rows affected")
 	// errNoRowsUpdated error.
 	errNoRowsUpdated = errors.New("no rows updated")
+	// errCallingRowsAffected error.
+	errCallingRowsAffected = errors.New("error in calling rowsAffected function")
 )
 
 // UserCreate function.
@@ -124,10 +126,15 @@ func (u *Operation) UserUpdate(id string, user model.User) error {
 	}
 
 	rAffected, err := res.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
 	if rAffected == 0 {
 		err = errNoRowsAffected
 
-		return errNoRowsAffected
+		return err
 	}
 
 	return nil
@@ -141,7 +148,13 @@ func (u *Operation) UserDelete(id string) error {
 		return err
 	}
 
-	rAffected, _ := exec.RowsAffected()
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
 	if rAffected == 0 {
 		err = errNoRowsAffected
 
