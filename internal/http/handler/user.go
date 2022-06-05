@@ -58,7 +58,7 @@ func (u User) Create(ctx *fiber.Ctx) error {
 
 // Get function.
 func (u User) Get(ctx *fiber.Ctx) error {
-	userID := ctx.Get("id")
+	userID := ctx.AllParams()["id"]
 
 	user, err := u.Store.UserGet(userID)
 	if err != nil {
@@ -74,7 +74,7 @@ func (u User) Get(ctx *fiber.Ctx) error {
 
 // Delete function.
 func (u User) Delete(ctx *fiber.Ctx) error {
-	userID := ctx.Get("id")
+	userID := ctx.AllParams()["id"]
 
 	if err := u.Store.UserDelete(userID); err != nil {
 		u.Logger.Error("failed to delete user")
@@ -84,5 +84,5 @@ func (u User) Delete(ctx *fiber.Ctx) error {
 		}) //nolint:wrapcheck
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
+	return ctx.SendStatus(fiber.StatusOK) //nolint:wrapcheck
 }
