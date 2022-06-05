@@ -48,4 +48,8 @@ func (a App) Register(app *fiber.App) {
 		Logger: a.Logger,
 	}.Register(app.Group("/categories", auth.Auth))
 
+	handler.Criteria{
+		Store:  a.Store,
+		Logger: a.Logger,
+	}.Register(app.Group("/criteria", auth.Auth))
 }
