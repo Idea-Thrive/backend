@@ -20,6 +20,7 @@ func (i Idea) Register(group fiber.Router) {
 	group.Post("/", i.Create)
 	group.Get("/:id", i.Get)
 	group.Get("/", i.GetAll)
+	group.Delete("/:id", i.Delete)
 }
 
 func (i Idea) Create(ctx *fiber.Ctx) error {
@@ -73,4 +74,18 @@ func (i Idea) GetAll(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(ideas) //nolint:wrapcheck
+}
+
+func (i Idea) Delete(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	if err := i.Store.IdeaDelete(id); err != nil {
+		i.Logger.Error("failed to delete idea", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "failed to delete idea",
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
 }
