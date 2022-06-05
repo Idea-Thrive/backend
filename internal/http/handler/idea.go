@@ -2,6 +2,7 @@ package handler
 
 import (
 	"strconv"
+	"time"
 
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
@@ -33,6 +34,9 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 			"error": "failed to parse body",
 		}) //nolint:wrapcheck
 	}
+
+	idea.CreatedAt = time.Now()
+	idea.UpdatedAt = time.Now()
 
 	if err := i.Store.IdeaCreate(*idea); err != nil {
 		i.Logger.Error("failed to create idea", zap.Error(err))
