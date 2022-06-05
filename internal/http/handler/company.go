@@ -55,7 +55,7 @@ func (c Company) Create(ctx *fiber.Ctx) error {
 }
 
 func (c Company) Get(ctx *fiber.Ctx) error {
-	id := ctx.Params("id")
+	id := ctx.AllParams()["id"]
 
 	company, err := c.Store.CompanyGet(id)
 	if err != nil {
