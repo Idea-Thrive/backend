@@ -1,6 +1,8 @@
 package handler
 
 import (
+	"time"
+
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
@@ -30,6 +32,9 @@ func (c Category) Create(ctx *fiber.Ctx) error {
 			"error": err.Error(),
 		})
 	}
+
+	category.CreatedAt = time.Now()
+	category.UpdatedAt = time.Now()
 
 	if err := c.Store.CategoryCreate(*category); err != nil {
 		c.Logger.Error("failed to create category", zap.Error(err))
