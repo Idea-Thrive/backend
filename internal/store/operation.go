@@ -16,4 +16,8 @@ type Operation interface {
 	IdeaGet(id string) (*model.Idea, error)
 	IdeaGetAll(companyID, category string, size, offset int) ([]model.Idea, error)
 	IdeaDelete(id string) error
+
+	CompanyCreate(company model.Company) error
+	CompanyGet(id string) (*model.Company, error)
+	CompanyDelete(id string) error
 }
