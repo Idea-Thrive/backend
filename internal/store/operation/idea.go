@@ -24,7 +24,7 @@ func (u *Operation) IdeaGet(id string) (*model.Idea, error) {
 	}, nil
 }
 
-func (u *Operation) IdeaGetAll(size, offset int) ([]model.Idea, error) {
+func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) ([]model.Idea, error) {
 	idea := model.Idea{
 		Title:         "good idea",
 		Category:      "others",
