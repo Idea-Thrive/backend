@@ -19,16 +19,16 @@ var (
 
 // UserCreate function.
 func (u *Operation) UserCreate(user model.User) (err error) {
-	return nil
-	currEmail := "" //nolint:govet
-	errRetrieve := u.DB.QueryRow("SELECT email from User WHERE email = ?", user.Email).Scan(&currEmail)
 
-	if errRetrieve != nil {
-		err = errRetrieveDataFromUserTable
-	}
+	currEmail := ""
+	errRetrieve := u.DB.QueryRow("SELECT email from User WHERE email = ?", user.Email).Scan(&currEmail)
 
 	if currEmail == user.Email {
 		err = errUserAlreadyExistsInTable
+	}
+
+	if errRetrieve != nil {
+		u.Logger.Error("user with this email doesn't exist")
 	}
 
 	queryString := "INSERT INTO User (first_name, last_name, email, phone_number, photo_url, company_id, personnel_id," +
