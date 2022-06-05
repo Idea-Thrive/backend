@@ -13,8 +13,6 @@ var (
 	errNotInsertedInUserTable = errors.New("not inserted in user table")
 	// errUserAlreadyExistsInTable error.
 	errUserAlreadyExistsInTable = errors.New("user already exists in user table")
-	// errRetrieveDataFromUserTable error.
-	errRetrieveDataFromUserTable = errors.New("cannot retrieve data from user table")
 )
 
 // UserCreate function.
