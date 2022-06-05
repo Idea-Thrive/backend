@@ -3,6 +3,7 @@ module github.com/Idea-Thrive/backend
 go 1.18
 
 require (
+	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gofiber/fiber/v2 v2.33.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/knadh/koanf v1.4.1

@@ -9,9 +9,12 @@ import (
 	"github.com/Idea-Thrive/backend/internal/http/middleware"
 	"github.com/Idea-Thrive/backend/internal/jwt"
 	"github.com/Idea-Thrive/backend/internal/logger"
+	"github.com/Idea-Thrive/backend/internal/mysql"
 	"github.com/Idea-Thrive/backend/internal/store"
+	"github.com/Idea-Thrive/backend/internal/store/operation"
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
+	"go.uber.org/zap"
 )
 
 // Command function.
@@ -28,11 +31,17 @@ func Command() *cobra.Command {
 
 // main function.
 func main(cmd *cobra.Command, args []string) {
-	cfg := config.Load("config.yaml")
+	cfg := config.Load("config.yml")
 
 	logger := logger.New(cfg.Log)
 
-	str := store.NewStore(nil)
+	db, err := mysql.New(cfg.DB, logger)
+	if err != nil {
+		logger.Fatal("error in database", zap.Error(err))
+	}
+	connection := operation.NewOperation(db, logger)
+
+	str := store.NewStore(connection)
 
 	app := fiber.New()
 

@@ -6,6 +6,8 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/Idea-Thrive/backend/internal/mysql"
+
 	"github.com/Idea-Thrive/backend/internal/http"
 	"github.com/Idea-Thrive/backend/internal/jwt"
 	"github.com/Idea-Thrive/backend/internal/logger"
@@ -24,9 +26,10 @@ const (
 
 // Config struct.
 type Config struct {
-	HTTP http.Config
-	JWT  jwt.Config
-	Log  logger.Config
+	HTTP http.Config   `koanf:"http"`
+	Log  logger.Config `koanf:"log"`
+	DB   mysql.Config  `koanf:"db"`
+	JWT  jwt.Config    `koanf:"jwt"`
 }
 
 // Load function.

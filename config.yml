@@ -1,0 +1,13 @@
+http:
+  port: 8080
+  secret: "jafar"
+
+log:
+  level: "debug"
+
+db:
+  host: localhost
+  user: root
+  pass: amir_hallaji
+  port: 3306
+  name: app

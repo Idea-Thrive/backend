@@ -39,6 +39,7 @@ func (u User) Create(ctx *fiber.Ctx) error {
 		Email:       req.Email,
 		PhoneNumber: req.PhoneNumber,
 		PhotoURL:    req.PhotoURL,
+		CompanyID:   req.CompanyID,
 		PersonnelID: req.PersonnelID,
 		Gender:      req.Gender,
 		Role:        req.Role,
