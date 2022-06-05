@@ -1,18 +1,20 @@
 package serve
 
 import (
-	"github.com/Idea-Thrive/backend/internal/mysql"
-	"github.com/Idea-Thrive/backend/internal/store/operation"
-	"go.uber.org/zap"
 	"log"
 	"strconv"
 
 	"github.com/Idea-Thrive/backend/internal/config"
 	"github.com/Idea-Thrive/backend/internal/http/handler"
+	"github.com/Idea-Thrive/backend/internal/http/middleware"
+	"github.com/Idea-Thrive/backend/internal/jwt"
 	"github.com/Idea-Thrive/backend/internal/logger"
+	"github.com/Idea-Thrive/backend/internal/mysql"
 	"github.com/Idea-Thrive/backend/internal/store"
+	"github.com/Idea-Thrive/backend/internal/store/operation"
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
+	"go.uber.org/zap"
 )
 
 // Command function.
@@ -43,8 +45,16 @@ func main(cmd *cobra.Command, args []string) {
 
 	app := fiber.New()
 
+	j := jwt.NewJWT(cfg.JWT)
+
+	auth := middleware.Auth{
+		JWT:    j,
+		Logger: logger,
+		Store:  str,
+	}
+
 	handler.Authentication{
-		Secret: cfg.HTTP.Secret,
+		JWT:    j,
 		Logger: logger,
 		Store:  str,
 	}.Register(app.Group("/auth"))
@@ -52,7 +62,12 @@ func main(cmd *cobra.Command, args []string) {
 	handler.User{
 		Store:  str,
 		Logger: logger,
-	}.Register(app.Group("/users"))
+	}.Register(app.Group("/users", auth.Auth))
+
+	handler.Idea{
+		Store:  str,
+		Logger: logger,
+	}.Register(app.Group("/ideas", auth.Auth))
 
 	log.Fatal(app.Listen(":" + strconv.Itoa(cfg.HTTP.Port)))
 }

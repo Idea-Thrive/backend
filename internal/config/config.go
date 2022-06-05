@@ -2,12 +2,14 @@ package config
 
 import (
 	"encoding/json"
-	"github.com/Idea-Thrive/backend/internal/mysql"
 	"log"
 	"regexp"
 	"strings"
 
+	"github.com/Idea-Thrive/backend/internal/mysql"
+
 	"github.com/Idea-Thrive/backend/internal/http"
+	"github.com/Idea-Thrive/backend/internal/jwt"
 	"github.com/Idea-Thrive/backend/internal/logger"
 	"github.com/knadh/koanf"
 	"github.com/knadh/koanf/parsers/yaml"
@@ -27,6 +29,7 @@ type Config struct {
 	HTTP http.Config   `koanf:"http"`
 	Log  logger.Config `koanf:"log"`
 	DB   mysql.Config  `koanf:"db"`
+	JWT  jwt.Config    `koanf:"jwt"`
 }
 
 // Load function.

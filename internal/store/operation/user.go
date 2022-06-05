@@ -19,7 +19,7 @@ var (
 
 // UserCreate function.
 func (u *Operation) UserCreate(user model.User) (err error) {
-
+	return nil
 	currEmail := ""
 	errRetrieve := u.DB.QueryRow("SELECT email from User WHERE email = ?", user.Email).Scan(&currEmail)
 
@@ -57,4 +57,21 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 	}
 
 	return fmt.Errorf("error: %w", err)
+}
+
+func (u *Operation) UserGet(id string) (*model.User, error) {
+	return &model.User{
+		FirstName:   "test-first",
+		LastName:    "test-last",
+		Email:       "test@gmail.com",
+		PhoneNumber: "1234567",
+		PhotoURL:    "",
+		PersonnelID: "1234",
+		Gender:      "male",
+		Role:        "employee",
+	}, nil
+}
+
+func (u *Operation) UserDelete(id string) error {
+	return nil
 }
