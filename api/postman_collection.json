@@ -565,6 +565,1041 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "company",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\",\n    \"logo_url\": \"asdasd\",\n    \"owner_national_id\": \"123\",\n    \"owner_first_name\": \"test-first\",\n    \"owner_last_name\": \"test-last\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADDRESS}}/companies",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"companies"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"test\",\n    \"logo_url\": \"asdasd\",\n    \"owner_national_id\": \"123\",\n    \"owner_first_name\": \"test-first\",\n    \"owner_last_name\": \"test-last\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ADDRESS}}/companies",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"companies"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 12:38:38 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2"
+								}
+							],
+							"cookie": [],
+							"body": "OK"
+						}
+					]
+				},
+				{
+					"name": "Get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/companies/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"companies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "545454"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/companies/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"companies",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "545454"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 12:38:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "239"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"test company\",\n    \"logo_url\": \"url\",\n    \"owner_national_id\": \"2520202020202\",\n    \"owner_first_name\": \"test-first\",\n    \"owner_last_name\": \"test-last\",\n    \"created_at\": \"2022-06-05T17:08:49.221832923+04:30\",\n    \"updated_at\": \"2022-06-05T17:08:49.22183297+04:30\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/companies/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"companies",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/companies/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"companies",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123123"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 12:39:04 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "category",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\",\n    \"description\": \"asdasd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADDRESS}}/categories",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"test\",\n    \"description\": \"asdasd\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ADDRESS}}/categories",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"categories"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 13:08:53 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7"
+								}
+							],
+							"cookie": [],
+							"body": "Created"
+						}
+					]
+				},
+				{
+					"name": "Get",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/categories/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "545454"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/categories/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "545454"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 13:09:13 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "168"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"name\": \"test-category\",\n    \"description\": \"this is a test description\",\n    \"created_at\": \"2022-06-05T17:39:13.52226651+04:30\",\n    \"updated_at\": \"2022-06-05T17:39:13.522266554+04:30\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/categories/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"categories",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/categories/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"categories",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123123"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 13:09:29 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/categories?company_id=123123",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"categories"
+							],
+							"query": [
+								{
+									"key": "company_id",
+									"value": "123123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GetAll",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/categories?company_id=123123",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"categories"
+									],
+									"query": [
+										{
+											"key": "company_id",
+											"value": "123123"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 13:16:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "505"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"name\": \"test-category\",\n        \"description\": \"this is a test description\",\n        \"created_at\": \"2022-06-05T17:46:41.36447384+04:30\",\n        \"updated_at\": \"2022-06-05T17:46:41.36447389+04:30\"\n    },\n    {\n        \"name\": \"test-category\",\n        \"description\": \"this is a test description\",\n        \"created_at\": \"2022-06-05T17:46:41.36447384+04:30\",\n        \"updated_at\": \"2022-06-05T17:46:41.36447389+04:30\"\n    },\n    {\n        \"name\": \"test-category\",\n        \"description\": \"this is a test description\",\n        \"created_at\": \"2022-06-05T17:46:41.36447384+04:30\",\n        \"updated_at\": \"2022-06-05T17:46:41.36447389+04:30\"\n    }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "criteria",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"c-1\",\n    \"category_id\": \"12334\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADDRESS}}/criteria",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"criteria"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"c-1\",\n    \"category_id\": \"12334\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ADDRESS}}/criteria",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"criteria"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 13:42:23 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7"
+								}
+							],
+							"cookie": [],
+							"body": "Created"
+						}
+					]
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/criteria?category_id=1231",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"criteria"
+							],
+							"query": [
+								{
+									"key": "category_id",
+									"value": "1231"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GetAll",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/criteria?category_id=1231",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"criteria"
+									],
+									"query": [
+										{
+											"key": "category_id",
+											"value": "1231"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 13:43:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "100"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"name\": \"c-1\",\n        \"category_id\": \"1\"\n    },\n    {\n        \"name\": \"c-2\",\n        \"category_id\": \"1\"\n    },\n    {\n        \"name\": \"c-3\",\n        \"category_id\": \"1\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/criteria/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"criteria",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "234234"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/criteria/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"criteria",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "234234"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 13:43:46 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "comment",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"score\": 1,\n    \"description\": \"this is a test description\",\n    \"user_id\": 123,\n    \"company_id\": 123,\n    \"idea_id\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{ADDRESS}}/comments/",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"comments",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"score\": 1,\n    \"description\": \"this is a test description\",\n    \"user_id\": 123,\n    \"company_id\": 123,\n    \"idea_id\": 123\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ADDRESS}}/comments/",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"comments",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 14:11:19 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/plain; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "7"
+								}
+							],
+							"cookie": [],
+							"body": "Created"
+						}
+					]
+				},
+				{
+					"name": "GetAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/comments/?size=100&offset=0&scoreOnly=false&idea_id=123123",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"comments",
+								""
+							],
+							"query": [
+								{
+									"key": "size",
+									"value": "100",
+									"description": "optional"
+								},
+								{
+									"key": "offset",
+									"value": "0",
+									"description": "optional"
+								},
+								{
+									"key": "scoreOnly",
+									"value": "false",
+									"description": "optional"
+								},
+								{
+									"key": "idea_id",
+									"value": "123123",
+									"description": "required"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "GetAll",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/comments/?size=100&offset=0&scoreOnly=false&idea_id=123123",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"comments",
+										""
+									],
+									"query": [
+										{
+											"key": "size",
+											"value": "100",
+											"description": "optional"
+										},
+										{
+											"key": "offset",
+											"value": "0",
+											"description": "optional"
+										},
+										{
+											"key": "scoreOnly",
+											"value": "false",
+											"description": "optional"
+										},
+										{
+											"key": "idea_id",
+											"value": "123123",
+											"description": "required"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 14:13:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "577"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"score\": 2,\n        \"description\": \"yes\",\n        \"user_id\": 123123,\n        \"company_id\": 2352354,\n        \"idea_id\": 423534543,\n        \"created_at\": \"2022-06-05T18:43:09.082217618+04:30\",\n        \"updated_at\": \"2022-06-05T18:43:09.082217669+04:30\"\n    },\n    {\n        \"score\": 2,\n        \"description\": \"yes\",\n        \"user_id\": 123123,\n        \"company_id\": 2352354,\n        \"idea_id\": 423534543,\n        \"created_at\": \"2022-06-05T18:43:09.082217618+04:30\",\n        \"updated_at\": \"2022-06-05T18:43:09.082217669+04:30\"\n    },\n    {\n        \"score\": 2,\n        \"description\": \"yes\",\n        \"user_id\": 123123,\n        \"company_id\": 2352354,\n        \"idea_id\": 423534543,\n        \"created_at\": \"2022-06-05T18:43:09.082217618+04:30\",\n        \"updated_at\": \"2022-06-05T18:43:09.082217669+04:30\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0wNVQxNzowODoyNy4zODE1MDg5MTMrMDQ6MzAiLCJleHBpcmVzX2F0IjoxNjU0NTE5MTA3fQ.7QyWg9YEcpA_ZpcjmoIVBYC90bcmHJ93TNHsJAHuYZ0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/comments/:id",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"comments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "123123123"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{ADDRESS}}/comments/:id",
+									"host": [
+										"{{ADDRESS}}"
+									],
+									"path": [
+										"comments",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "123123123"
+										}
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Sun, 05 Jun 2022 14:14:00 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
 		}
 	],
 	"event": [
