@@ -19,6 +19,7 @@ func (c Company) Register(group fiber.Router) {
 	group.Post("/", c.Create)
 	group.Get("/:id", c.Get)
 	group.Delete("/:id", c.Delete)
+	group.Put("/:id", c.Update)
 }
 
 func (c Company) Create(ctx *fiber.Ctx) error {
@@ -69,6 +70,44 @@ func (c Company) Get(ctx *fiber.Ctx) error {
 	return ctx.JSON(company) //nolint:wrapcheck
 }
 
+// Update function.
+func (c Company) Update(ctx *fiber.Ctx) error {
+	id := ctx.AllParams()["id"]
+
+	req := new(request.CompanyCreation)
+
+	if err := ctx.BodyParser(req); err != nil {
+		c.Logger.Error("failed to parse req", zap.Error(err))
+
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
+			"error": err.Error(),
+		})
+	}
+
+	company := model.Company{
+		CompanyID:       req.CompanyID,
+		Name:            req.Name,
+		LogoURL:         req.LogoURL,
+		OwnerNationalID: req.OwnerNationalID,
+		OwnerFirstName:  req.OwnerFirstName,
+		OwnerLastName:   req.OwnerLastName,
+		CreatedAt:       time.Now().String(),
+		UpdatedAt:       time.Now().String(),
+	}
+
+	if err := c.Store.CompanyUpdate(id, company); err != nil {
+
+		c.Logger.Error("failed to update company", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+			"error": err.Error(),
+		})
+	}
+
+	return ctx.SendStatus(fiber.StatusOK) //nolint:wrapcheck
+}
+
+// Delete function.
 func (c Company) Delete(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 

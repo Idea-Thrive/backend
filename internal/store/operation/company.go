@@ -83,6 +83,43 @@ func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
 	}, nil
 }
 
+// CompanyUpdate function.
+func (u *Operation) CompanyUpdate(id string, company model.Company) error {
+
+	queryString := "UPDATE `Company` SET `updated_at` = ?, `company_id` = ?, `name` = ?, `logo_url` = ?, `owner_national_id` = ?," +
+		" `owner_first_name` = ?, `owner_last_name` = ? WHERE `id` = ?"
+
+	res, err := u.DB.Exec(queryString,
+		time.Now(),
+		company.CompanyID,
+		company.Name,
+		company.LogoURL,
+		company.OwnerNationalID,
+		company.OwnerFirstName,
+		company.OwnerLastName,
+		id,
+	)
+	if err != nil {
+		err = errNoRowsUpdated
+
+		return err
+	}
+
+	rAffected, err := res.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+
+	return nil
+}
+
 // CompanyDelete function.
 func (u *Operation) CompanyDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `Company` WHERE `id` = ?", id)
