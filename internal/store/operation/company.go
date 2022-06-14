@@ -55,13 +55,16 @@ func (u *Operation) CompanyCreate(company model.Company) error {
 
 // CompanyGet function.
 func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `logo_url`, `owner_national_id`, "+
-		"`owner_first_name`, `owner_last_name` FROM `Company` WHERE `id` = ?", id).Scan(
+	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `logo_url`, `owner_national_id`, "+
+		"`owner_first_name`, `owner_last_name`, `created_at`, `updated_at` FROM `Company` WHERE `id` = ?", id).Scan(
 		&company.CompanyID,
+		&company.Name,
 		&company.LogoURL,
 		&company.OwnerNationalID,
 		&company.OwnerFirstName,
 		&company.OwnerLastName,
+		&company.CreatedAt,
+		&company.UpdatedAt,
 	)
 
 	if errRetrieve != nil {
@@ -69,10 +72,13 @@ func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
 	}
 
 	return model.Company{
-		Name:            company.CompanyID,
+		CompanyID:       company.CompanyID,
+		Name:            company.Name,
 		LogoURL:         company.LogoURL,
 		OwnerNationalID: company.OwnerNationalID,
 		OwnerFirstName:  company.OwnerFirstName,
 		OwnerLastName:   company.OwnerLastName,
+		CreatedAt:       company.CreatedAt,
+		UpdatedAt:       company.UpdatedAt,
 	}, nil
 }

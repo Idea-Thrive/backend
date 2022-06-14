@@ -39,8 +39,8 @@ func (c Company) Create(ctx *fiber.Ctx) error {
 		OwnerNationalID: req.OwnerNationalID,
 		OwnerFirstName:  req.OwnerFirstName,
 		OwnerLastName:   req.OwnerLastName,
-		CreatedAt:       time.Now(),
-		UpdatedAt:       time.Now(),
+		CreatedAt:       time.Now().String(),
+		UpdatedAt:       time.Now().String(),
 	}
 
 	if err := c.Store.CompanyCreate(company); err != nil {
