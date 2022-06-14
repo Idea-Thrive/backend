@@ -17,7 +17,8 @@ type Operation interface {
 	IdeaDelete(id string) error
 
 	CompanyCreate(company model.Company) error
-	CompanyGet(id string) (*model.Company, error)
+	CompanyGet(id string) (company model.Company, err error)
+	CompanyUpdate(id string, company model.Company) error
 	CompanyDelete(id string) error
 
 	CategoryCreate(category model.Category) error
