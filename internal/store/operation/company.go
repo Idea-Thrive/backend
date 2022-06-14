@@ -82,3 +82,26 @@ func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
 		UpdatedAt:       company.UpdatedAt,
 	}, nil
 }
+
+// CompanyDelete function.
+func (u *Operation) CompanyDelete(id string) error {
+	exec, err := u.DB.Exec("DELETE FROM `Company` WHERE `id` = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+	return nil
+}

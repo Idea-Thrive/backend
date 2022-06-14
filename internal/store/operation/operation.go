@@ -49,7 +49,3 @@ func (u *Operation) CategoryGetAll(companyID string) ([]model.Category, error) {
 func (u *Operation) CategoryDelete(id string) error {
 	return nil
 }
-
-func (u *Operation) CompanyDelete(id string) error {
-	return nil
-}
