@@ -19,8 +19,8 @@ func (u *Operation) IdeaGet(id string) (*model.Idea, error) {
 		DownVoteCount: -5,
 		CreatorID:     "hassan",
 		CompanyID:     "good-company",
-		CreatedAt:     time.Now(),
-		UpdatedAt:     time.Now(),
+		CreatedAt:     time.Now().String(),
+		UpdatedAt:     time.Now().String(),
 	}, nil
 }
 
@@ -33,8 +33,8 @@ func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) ([]
 		DownVoteCount: -5,
 		CreatorID:     "hassan",
 		CompanyID:     "good-company",
-		CreatedAt:     time.Now(),
-		UpdatedAt:     time.Now(),
+		CreatedAt:     time.Now().String(),
+		UpdatedAt:     time.Now().String(),
 	}
 
 	ideas := make([]model.Idea, 0)

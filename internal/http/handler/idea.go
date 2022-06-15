@@ -35,8 +35,8 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 		}) //nolint:wrapcheck
 	}
 
-	idea.CreatedAt = time.Now()
-	idea.UpdatedAt = time.Now()
+	idea.CreatedAt = time.Now().String()
+	idea.UpdatedAt = time.Now().String()
 
 	if err := i.Store.IdeaCreate(*idea); err != nil {
 		i.Logger.Error("failed to create idea", zap.Error(err))
