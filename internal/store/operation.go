@@ -12,7 +12,7 @@ type Operation interface {
 	UserDelete(id string) error
 
 	IdeaCreate(idea model.Idea) error
-	IdeaGet(id string) (*model.Idea, error)
+	IdeaGet(id string) (idea model.Idea, err error)
 	IdeaGetAll(companyID, category string, size, offset int) ([]model.Idea, error)
 	IdeaDelete(id string) error
 

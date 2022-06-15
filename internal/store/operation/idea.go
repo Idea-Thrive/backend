@@ -2,7 +2,6 @@ package operation
 
 import (
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/Idea-Thrive/backend/internal/model"
@@ -14,7 +13,6 @@ var (
 
 // IdeaCreate function.
 func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
-	fmt.Println("here")
 	queryString := "INSERT INTO `Idea`(`category`, `title`, `description`," +
 		" `up_vote`, `down_vote`, `creator_id`, `company_id`," +
 		" `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
@@ -44,18 +42,27 @@ func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
 	return err
 }
 
-func (u *Operation) IdeaGet(id string) (*model.Idea, error) {
-	return &model.Idea{
-		Title:         "good idea",
-		Category:      1,
-		Description:   "this is a very good idea",
-		UpVoteCount:   10,
-		DownVoteCount: -5,
-		CreatorID:     "hassan",
-		CompanyID:     "good-company",
-		CreatedAt:     time.Now().String(),
-		UpdatedAt:     time.Now().String(),
-	}, nil
+func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
+
+	errRetrieve := u.DB.QueryRow("SELECT `category`, `title`, `description`, `up_vote`, `down_vote`,"+
+		" `creator_id`, `company_id`, `created_at`, `updated_at` FROM `Idea` WHERE `id` = ?", id).Scan(
+		&idea.Category,
+		&idea.Title,
+		&idea.Description,
+		&idea.UpVoteCount,
+		&idea.DownVoteCount,
+		&idea.CreatorID,
+		&idea.CompanyID,
+		&idea.CreatedAt,
+		&idea.UpdatedAt,
+	)
+
+	if errRetrieve != nil {
+		return model.Idea{}, errNoRecordFound
+	}
+
+	return idea, nil
+
 }
 
 func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) ([]model.Idea, error) {
