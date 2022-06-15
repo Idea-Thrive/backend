@@ -6,6 +6,6 @@ type IdeaCreation struct {
 	Description string `json:"description"`
 	UpVote      int    `json:"up_vote"`
 	DownVote    int    `json:"down_vote"`
-	CreatorID   int    `json:"creator_id"`
-	CompanyID   int    `json:"company_id"`
+	CreatorID   string `json:"creator_id"`
+	CompanyID   string `json:"company_id"`
 }

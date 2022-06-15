@@ -2,8 +2,8 @@ package model
 
 // Idea struct.
 type Idea struct {
+	Category      int    `json:"category,omitempty"`
 	Title         string `json:"title,omitempty"`
-	Category      string `json:"category,omitempty"`
 	Description   string `json:"description,omitempty"`
 	UpVoteCount   int    `json:"up_vote_count,omitempty"`
 	DownVoteCount int    `json:"down_vote_count,omitempty"`
