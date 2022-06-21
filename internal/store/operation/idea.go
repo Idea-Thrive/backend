@@ -84,6 +84,25 @@ func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) ([]
 	return ideas, nil
 }
 
+// IdeaDelete function.
 func (u *Operation) IdeaDelete(id string) error {
+	exec, err := u.DB.Exec("DELETE FROM `Idea` WHERE `id` = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
 	return nil
 }
