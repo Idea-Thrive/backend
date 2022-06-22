@@ -27,7 +27,7 @@ func (u *Operation) CategoryCreate(category model.Category) (err error) {
 
 	lid, _ := result.LastInsertId()
 	if lid == 0 {
-		err = errNotInsertedInUserTable
+		err = errNotInsertedInCategoryTable
 
 		return err
 	}
