@@ -65,10 +65,6 @@ func (u *Operation) CriteriaDelete(id string) error {
 	return nil
 }
 
-func (u *Operation) CategoryCreate(category model.Category) error {
-	return nil
-}
-
 func (u *Operation) CategoryGet(id string) (*model.Category, error) {
 	return &model.Category{
 		Name:        "test-category",
