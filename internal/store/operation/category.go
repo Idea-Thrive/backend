@@ -50,3 +50,26 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 
 	return category, nil
 }
+
+// CategoryDelete function.
+func (u *Operation) CategoryDelete(id string) error {
+	exec, err := u.DB.Exec("DELETE FROM `Category` WHERE `id` = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+	return nil
+}

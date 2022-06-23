@@ -78,7 +78,3 @@ func (u *Operation) CategoryGetAll(companyID string) ([]model.Category, error) {
 
 	return categories, nil
 }
-
-func (u *Operation) CategoryDelete(id string) error {
-	return nil
-}
