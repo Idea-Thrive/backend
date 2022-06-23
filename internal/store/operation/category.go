@@ -12,10 +12,11 @@ var (
 
 // CategoryCreate function.
 func (u *Operation) CategoryCreate(category model.Category) (err error) {
-	queryString := "INSERT INTO `Category` (`name`, `description`, `created_at`, `updated_at`)" +
-		" VALUES (?, ?, ?, ?)"
+	queryString := "INSERT INTO `Category` (`company_id`, `name`, `description`, `created_at`, `updated_at`)" +
+		" VALUES (?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
+		category.CompanyID,
 		category.Name,
 		category.Description,
 		time.Now(),
@@ -37,7 +38,8 @@ func (u *Operation) CategoryCreate(category model.Category) (err error) {
 
 // CategoryGet function.
 func (u *Operation) CategoryGet(id string) (category model.Category, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `name`, `description`, `created_at`, `updated_at` FROM `Category` WHERE `id` = ?", id).Scan(
+	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `description`, `created_at`, `updated_at` FROM `Category` WHERE `id` = ?", id).Scan(
+		&category.CompanyID,
 		&category.Name,
 		&category.Description,
 		&category.CreatedAt,
@@ -45,7 +47,7 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 	)
 
 	if errRetrieve != nil {
-		return model.Category{}, nil
+		return model.Category{}, err
 	}
 
 	return category, nil
