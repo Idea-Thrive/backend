@@ -1,13 +1,12 @@
 package handler
 
 import (
-	"strconv"
-	"time"
-
+	"github.com/Idea-Thrive/backend/internal/http/request"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
+	"strconv"
 )
 
 // Idea struct.
@@ -25,9 +24,9 @@ func (i Idea) Register(group fiber.Router) {
 }
 
 func (i Idea) Create(ctx *fiber.Ctx) error {
-	idea := new(model.Idea)
+	req := new(request.IdeaCreation)
 
-	if err := ctx.BodyParser(&idea); err != nil {
+	if err := ctx.BodyParser(&req); err != nil {
 		i.Logger.Error("failed to parse body", zap.Error(err))
 
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -35,10 +34,17 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 		}) //nolint:wrapcheck
 	}
 
-	idea.CreatedAt = time.Now()
-	idea.UpdatedAt = time.Now()
+	idea := model.Idea{
+		Category:      req.Category,
+		Title:         req.Title,
+		Description:   req.Description,
+		UpVoteCount:   req.UpVote,
+		DownVoteCount: req.DownVote,
+		CreatorID:     req.CreatorID,
+		CompanyID:     req.CompanyID,
+	}
 
-	if err := i.Store.IdeaCreate(*idea); err != nil {
+	if err := i.Store.IdeaCreate(idea); err != nil {
 		i.Logger.Error("failed to create idea", zap.Error(err))
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{

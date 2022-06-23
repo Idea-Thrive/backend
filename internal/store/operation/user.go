@@ -87,17 +87,7 @@ func (u *Operation) UserGet(id string) (user model.User, err error) {
 		return model.User{}, errNoRecordFound
 	}
 
-	return model.User{
-		FirstName:   user.FirstName,
-		LastName:    user.LastName,
-		Email:       user.Email,
-		PhoneNumber: user.PhoneNumber,
-		PhotoURL:    user.PhotoURL,
-		CompanyID:   user.CompanyID,
-		PersonnelID: user.PersonnelID,
-		Gender:      user.Gender,
-		Role:        user.Role,
-	}, nil
+	return user, nil
 }
 
 // UserUpdate function.

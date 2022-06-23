@@ -71,16 +71,7 @@ func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
 		return model.Company{}, errNoRecordFound
 	}
 
-	return model.Company{
-		CompanyID:       company.CompanyID,
-		Name:            company.Name,
-		LogoURL:         company.LogoURL,
-		OwnerNationalID: company.OwnerNationalID,
-		OwnerFirstName:  company.OwnerFirstName,
-		OwnerLastName:   company.OwnerLastName,
-		CreatedAt:       company.CreatedAt,
-		UpdatedAt:       company.UpdatedAt,
-	}, nil
+	return company, nil
 }
 
 // CompanyUpdate function.
