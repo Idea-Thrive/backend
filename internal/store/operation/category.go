@@ -8,6 +8,7 @@ import (
 
 var (
 	errNotInsertedInCategoryTable = errors.New("not inserted in category table")
+	errRetrieveQueryError         = errors.New("error in retrieve query error")
 )
 
 // CategoryCreate function.
@@ -51,6 +52,35 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 	}
 
 	return category, nil
+}
+
+func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err error) {
+	results, err := u.DB.Query("SELECT `name`, `description`, `created_at`, `updated_at` "+
+		"FROM `Category` WHERE `company_id` = ?", companyID)
+
+	if err != nil {
+		err = errRetrieveQueryError
+
+		return res, err
+	}
+
+	for results.Next() {
+		var categoryItem model.Category
+
+		errScan := results.Scan(
+			&categoryItem.Name,
+			&categoryItem.Description,
+			&categoryItem.CreatedAt,
+			&categoryItem.UpdatedAt,
+		)
+		if errScan != nil {
+			return res, errScan
+		}
+
+		res = append(res, categoryItem)
+	}
+
+	return res, err
 }
 
 // CategoryDelete function.
