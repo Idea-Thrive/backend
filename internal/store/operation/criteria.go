@@ -30,3 +30,26 @@ func (u *Operation) CriteriaCreate(criteria model.Criteria) error {
 
 	return err
 }
+
+// CriteriaDelete function.
+func (u *Operation) CriteriaDelete(id string) error {
+	exec, err := u.DB.Exec("DELETE FROM `Criteria` WHERE `id` = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+	return nil
+}

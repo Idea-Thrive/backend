@@ -56,7 +56,3 @@ func (u *Operation) CriteriaGetAll(categoryID string) ([]model.Criteria, error) 
 
 	return criteria, nil
 }
-
-func (u *Operation) CriteriaDelete(id string) error {
-	return nil
-}
