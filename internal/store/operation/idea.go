@@ -2,6 +2,7 @@ package operation
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/Idea-Thrive/backend/internal/model"
@@ -65,23 +66,43 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
 }
 
-func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) ([]model.Idea, error) {
-	idea := model.Idea{
-		Title:         "good idea",
-		Category:      1,
-		Description:   "this is a very good idea",
-		UpVoteCount:   10,
-		DownVoteCount: -5,
-		CreatorID:     "hassan",
-		CompanyID:     "good-company",
-		CreatedAt:     time.Now().String(),
-		UpdatedAt:     time.Now().String(),
+func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) (res []model.Idea, err error) {
+	queryString := "SELECT `title`, `description`, `up_vote`, `down_vote`, `creator_id`, " +
+		"`created_at`, `updated_at` FROM `Idea` WHERE 1"
+
+	if companyID != "" {
+		queryString += fmt.Sprintf(" AND `company_id` = %s", companyID)
 	}
 
-	ideas := make([]model.Idea, 0)
-	ideas = append(ideas, idea, idea, idea)
+	if category != "" {
+		queryString += fmt.Sprintf(" AND `category` = %s", category)
+	}
 
-	return ideas, nil
+	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
+
+	ideas, err := u.DB.Query(queryString)
+
+	for ideas.Next() {
+		var ideaItem model.Idea
+
+		errScan := ideas.Scan(
+			&ideaItem.Title,
+			&ideaItem.Description,
+			&ideaItem.UpVoteCount,
+			&ideaItem.DownVoteCount,
+			&ideaItem.CreatorID,
+			&ideaItem.CreatedAt,
+			&ideaItem.UpdatedAt,
+		)
+
+		if errScan != nil {
+			return res, errScan
+		}
+
+		res = append(res, ideaItem)
+	}
+
+	return res, nil
 }
 
 // IdeaDelete function.
