@@ -64,34 +64,3 @@ func (u *Operation) CriteriaGetAll(categoryID string) ([]model.Criteria, error) 
 func (u *Operation) CriteriaDelete(id string) error {
 	return nil
 }
-
-func (u *Operation) CategoryCreate(category model.Category) error {
-	return nil
-}
-
-func (u *Operation) CategoryGet(id string) (*model.Category, error) {
-	return &model.Category{
-		Name:        "test-category",
-		Description: "this is a test description",
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
-	}, nil
-}
-
-func (u *Operation) CategoryGetAll(companyID string) ([]model.Category, error) {
-	category := model.Category{
-		Name:        "test-category",
-		Description: "this is a test description",
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
-	}
-
-	categories := make([]model.Category, 0)
-	categories = append(categories, category, category, category)
-
-	return categories, nil
-}
-
-func (u *Operation) CategoryDelete(id string) error {
-	return nil
-}

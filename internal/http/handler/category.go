@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"github.com/Idea-Thrive/backend/internal/http/request"
 	"time"
 
 	"github.com/Idea-Thrive/backend/internal/model"
@@ -23,9 +24,9 @@ func (c Category) Register(group fiber.Router) {
 }
 
 func (c Category) Create(ctx *fiber.Ctx) error {
-	category := new(model.Category)
+	req := new(request.CategoryCreation)
 
-	if err := ctx.BodyParser(category); err != nil {
+	if err := ctx.BodyParser(&req); err != nil {
 		c.Logger.Error("failed to parse body", zap.Error(err))
 
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
@@ -33,10 +34,15 @@ func (c Category) Create(ctx *fiber.Ctx) error {
 		})
 	}
 
-	category.CreatedAt = time.Now()
-	category.UpdatedAt = time.Now()
+	category := model.Category{
+		CompanyID:   req.CompanyID,
+		Name:        req.Name,
+		Description: req.Description,
+		CreatedAt:   time.Now().String(),
+		UpdatedAt:   time.Now().String(),
+	}
 
-	if err := c.Store.CategoryCreate(*category); err != nil {
+	if err := c.Store.CategoryCreate(category); err != nil {
 		c.Logger.Error("failed to create category", zap.Error(err))
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
