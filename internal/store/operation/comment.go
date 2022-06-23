@@ -38,3 +38,26 @@ func (u *Operation) CommentCreate(comment model.Comment) (err error) {
 
 	return nil
 }
+
+// CommentDelete function.
+func (u *Operation) CommentDelete(id string) error {
+	exec, err := u.DB.Exec("DELETE FROM `Comment` WHERE `id` = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+	return nil
+}

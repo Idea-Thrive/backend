@@ -32,7 +32,3 @@ func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset in
 
 	return []model.Comment{comment, comment, comment}, nil
 }
-
-func (u *Operation) CommentDelete(id string) error {
-	return nil
-}
