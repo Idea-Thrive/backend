@@ -47,8 +47,8 @@ func (c Comment) Create(ctx *fiber.Ctx) error {
 }
 
 func (c Comment) GetAll(ctx *fiber.Ctx) error {
-	size, _ := strconv.Atoi(ctx.Query("size"))                         // optional
-	offset, _ := strconv.Atoi(ctx.Query("offset"))                     // optional
+	size, _ := strconv.Atoi(ctx.Query("size", "100"))                  // optional
+	offset, _ := strconv.Atoi(ctx.Query("offset", "0"))                // optional
 	scoreOnly, _ := strconv.ParseBool(ctx.Query("scoreOnly", "false")) // optional
 	ideaID := ctx.Query("idea_id")                                     // required
 
