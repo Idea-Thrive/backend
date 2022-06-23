@@ -42,7 +42,7 @@ func (c Criteria) Create(ctx *fiber.Ctx) error {
 }
 
 func (c Criteria) GetAll(ctx *fiber.Ctx) error {
-	categoryID := ctx.Params("category_id")
+	categoryID := ctx.Query("category_id")
 
 	criteria, err := c.Store.CriteriaGetAll(categoryID)
 	if err != nil {
