@@ -30,8 +30,8 @@ func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset in
 		UserID:      123123,
 		CompanyID:   2352354,
 		IdeaID:      423534543,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
+		CreatedAt:   time.Now().String(),
+		UpdatedAt:   time.Now().String(),
 	}
 
 	return []model.Comment{comment, comment, comment}, nil

@@ -32,8 +32,8 @@ func (c Comment) Create(ctx *fiber.Ctx) error {
 		})
 	}
 
-	comment.CreatedAt = time.Now()
-	comment.UpdatedAt = time.Now()
+	comment.CreatedAt = time.Now().String()
+	comment.UpdatedAt = time.Now().String()
 
 	if err := c.Store.CommentCreate(*comment); err != nil {
 		c.Logger.Error("failed to create comment", zap.Error(err))
