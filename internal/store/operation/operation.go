@@ -40,19 +40,3 @@ func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset in
 func (u *Operation) CommentDelete(id string) error {
 	return nil
 }
-
-func (u *Operation) CriteriaGetAll(categoryID string) ([]model.Criteria, error) {
-	c := model.Criteria{
-		Name:       "c-1",
-		CategoryID: "1",
-	}
-
-	criteria := make([]model.Criteria, 0)
-	criteria = append(criteria, c)
-	c.Name = "c-2"
-	criteria = append(criteria, c)
-	c.Name = "c-3"
-	criteria = append(criteria, c)
-
-	return criteria, nil
-}

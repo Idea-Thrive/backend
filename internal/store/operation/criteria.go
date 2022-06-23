@@ -31,6 +31,32 @@ func (u *Operation) CriteriaCreate(criteria model.Criteria) error {
 	return err
 }
 
+// CriteriaGetAll function.
+func (u *Operation) CriteriaGetAll(categoryID string) (res []model.Criteria, err error) {
+	results, err := u.DB.Query("SELECT `name` FROM `Criteria` WHERE `category_id` = ?", categoryID)
+
+	if err != nil {
+		err = errRetrieveQueryError
+
+		return res, err
+	}
+
+	for results.Next() {
+		var criteriaItem model.Criteria
+
+		errScan := results.Scan(
+			&criteriaItem.Name,
+		)
+		if errScan != nil {
+			return res, errScan
+		}
+
+		res = append(res, criteriaItem)
+	}
+
+	return res, err
+}
+
 // CriteriaDelete function.
 func (u *Operation) CriteriaDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `Criteria` WHERE `id` = ?", id)
