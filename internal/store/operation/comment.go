@@ -2,6 +2,7 @@ package operation
 
 import (
 	"errors"
+	"fmt"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"time"
 )
@@ -37,6 +38,44 @@ func (u *Operation) CommentCreate(comment model.Comment) (err error) {
 	}
 
 	return nil
+}
+
+// CommentGetAll function.
+func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset int) (res []model.Comment, err error) {
+	queryString := "SELECT `company_id`, `user_id`, `score`, `description`, `created_at`, `updated_at` FROM `Comment` WHERE 1"
+
+	if ideaID != "" {
+		queryString += fmt.Sprintf(" AND idea_id = %s", ideaID)
+	}
+
+	if scoreOnly {
+		queryString += fmt.Sprintf(" AND score <> %d", 0)
+	}
+
+	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
+
+	ideas, err := u.DB.Query(queryString)
+
+	for ideas.Next() {
+		var commentItem model.Comment
+
+		errScan := ideas.Scan(
+			&commentItem.CompanyID,
+			&commentItem.UserID,
+			&commentItem.Score,
+			&commentItem.Description,
+			&commentItem.CreatedAt,
+			&commentItem.UpdatedAt,
+		)
+
+		if errScan != nil {
+			return res, errScan
+		}
+
+		res = append(res, commentItem)
+	}
+
+	return res, nil
 }
 
 // CommentDelete function.

@@ -2,9 +2,6 @@ package operation
 
 import (
 	"database/sql"
-	"time"
-
-	"github.com/Idea-Thrive/backend/internal/model"
 	"go.uber.org/zap"
 )
 
@@ -17,18 +14,4 @@ type Operation struct {
 // NewOperation function.
 func NewOperation(db *sql.DB, logger *zap.Logger) *Operation {
 	return &Operation{DB: db, Logger: logger}
-}
-
-func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset int) ([]model.Comment, error) {
-	comment := model.Comment{
-		Score:       2,
-		Description: "yes",
-		UserID:      "123123",
-		CompanyID:   "2352354",
-		IdeaID:      "423534543",
-		CreatedAt:   time.Now().String(),
-		UpdatedAt:   time.Now().String(),
-	}
-
-	return []model.Comment{comment, comment, comment}, nil
 }
