@@ -34,3 +34,19 @@ func (u *Operation) CategoryCreate(category model.Category) (err error) {
 
 	return err
 }
+
+// CategoryGet function.
+func (u *Operation) CategoryGet(id string) (category model.Category, err error) {
+	errRetrieve := u.DB.QueryRow("SELECT `name`, `description`, `created_at`, `updated_at` FROM `Category` WHERE `id` = ?", id).Scan(
+		&category.Name,
+		&category.Description,
+		&category.CreatedAt,
+		&category.UpdatedAt,
+	)
+
+	if errRetrieve != nil {
+		return model.Category{}, nil
+	}
+
+	return category, nil
+}

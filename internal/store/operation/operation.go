@@ -65,15 +65,6 @@ func (u *Operation) CriteriaDelete(id string) error {
 	return nil
 }
 
-func (u *Operation) CategoryGet(id string) (*model.Category, error) {
-	return &model.Category{
-		Name:        "test-category",
-		Description: "this is a test description",
-		CreatedAt:   time.Now().String(),
-		UpdatedAt:   time.Now().String(),
-	}, nil
-}
-
 func (u *Operation) CategoryGetAll(companyID string) ([]model.Category, error) {
 	category := model.Category{
 		Name:        "test-category",
