@@ -41,10 +41,6 @@ func (u *Operation) CommentDelete(id string) error {
 	return nil
 }
 
-func (u *Operation) CriteriaCreate(criteria model.Criteria) error {
-	return nil
-}
-
 func (u *Operation) CriteriaGetAll(categoryID string) ([]model.Criteria, error) {
 	c := model.Criteria{
 		Name:       "c-1",
