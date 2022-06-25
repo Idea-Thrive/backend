@@ -317,6 +317,34 @@
 							"body": null
 						}
 					]
+				},
+				{
+					"name": "GetByUsername",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1laGRpIiwiaXNzdWVkX2F0IjoiMjAyMi0wNi0yNVQxMDoyMzowMC4wMTg2NDg5MiswNDozMCIsImV4cGlyZXNfYXQiOjE2NTYyMjI3ODB9.P0TcRNaOrQur1U1bhf6v9xxP81Bs-0L3ncnuiisMcAE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ADDRESS}}/users/info",
+							"host": [
+								"{{ADDRESS}}"
+							],
+							"path": [
+								"users",
+								"info"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

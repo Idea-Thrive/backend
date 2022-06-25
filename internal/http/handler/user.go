@@ -17,7 +17,7 @@ type User struct {
 // Register function.
 func (u User) Register(group fiber.Router) {
 	group.Post("/", u.Create)
-	group.Get("/", u.GetByUsername)
+	group.Get("/info", u.GetByUsername)
 	group.Get("/:id", u.Get)
 	group.Put("/:id", u.Update)
 	group.Delete("/:id", u.Delete)
