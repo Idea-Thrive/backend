@@ -17,6 +17,7 @@ type User struct {
 // Register function.
 func (u User) Register(group fiber.Router) {
 	group.Post("/", u.Create)
+	group.Get("/", u.GetByUsername)
 	group.Get("/:id", u.Get)
 	group.Put("/:id", u.Update)
 	group.Delete("/:id", u.Delete)
@@ -62,6 +63,21 @@ func (u User) Get(ctx *fiber.Ctx) error {
 	userID := ctx.AllParams()["id"]
 
 	user, err := u.Store.UserGet(userID)
+	if err != nil {
+		u.Logger.Error("failed to get user from store", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(user) //nolint:wrapcheck
+}
+
+func (u User) GetByUsername(ctx *fiber.Ctx) error {
+	username := ctx.Locals("username").(string)
+
+	user, err := u.Store.UserGetByUsername(username)
 	if err != nil {
 		u.Logger.Error("failed to get user from store", zap.Error(err))
 
