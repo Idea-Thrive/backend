@@ -35,6 +35,14 @@ func (a Auth) Auth(ctx *fiber.Ctx) error {
 		})
 	}
 
+	if err := payload.Valid(); err != nil {
+		a.Logger.Error("token is not valid", zap.Error(err))
+
+		return ctx.Status(fiber.StatusUnauthorized).JSON(fiber.Map{ //nolint:wrapcheck
+			"message": "Failed to verify token",
+		})
+	}
+
 	ctx.Locals("username", payload.Username)
 
 	a.Logger.Info("Successfully verified token", zap.String("username", payload.Username))
