@@ -34,7 +34,6 @@ func (c Company) Create(ctx *fiber.Ctx) error {
 	}
 
 	company := model.Company{
-		CompanyID:       req.CompanyID,
 		Name:            req.Name,
 		LogoURL:         req.LogoURL,
 		OwnerNationalID: req.OwnerNationalID,
@@ -85,7 +84,6 @@ func (c Company) Update(ctx *fiber.Ctx) error {
 	}
 
 	company := model.Company{
-		CompanyID:       req.CompanyID,
 		Name:            req.Name,
 		LogoURL:         req.LogoURL,
 		OwnerNationalID: req.OwnerNationalID,

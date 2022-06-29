@@ -7,30 +7,17 @@ import (
 )
 
 var (
-	errRepetitiveCompanyID       = errors.New("company with this company id already exists")
 	errNotInsertedInCompanyTable = errors.New("not inserted in company table")
 )
 
 // CompanyCreate function.
 func (u *Operation) CompanyCreate(company model.Company) error {
-	currCompanyID := ""
-	errRetrieve := u.DB.QueryRow("SELECT `company_id` FROM `Company` WHERE `company_id` = ?",
-		company.CompanyID).Scan(&currCompanyID)
 
-	if errRetrieve != nil {
-		u.Logger.Error("no company id found with this id")
-	}
-
-	if currCompanyID == company.CompanyID {
-		return errRepetitiveCompanyID
-	}
-
-	queryString := "INSERT INTO `Company`(`company_id`, `name`, `logo_url`, " +
+	queryString := "INSERT INTO `Company`(`name`, `logo_url`, " +
 		"`owner_national_id`, `owner_first_name`, `owner_last_name`, `created_at`, " +
-		"`updated_at`)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+		"`updated_at`)  VALUES (?, ?, ?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
-		company.CompanyID,
 		company.Name,
 		company.LogoURL,
 		company.OwnerNationalID,
@@ -55,9 +42,8 @@ func (u *Operation) CompanyCreate(company model.Company) error {
 
 // CompanyGet function.
 func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `logo_url`, `owner_national_id`, "+
+	errRetrieve := u.DB.QueryRow("SELECT `name`, `logo_url`, `owner_national_id`, "+
 		"`owner_first_name`, `owner_last_name`, `created_at`, `updated_at` FROM `Company` WHERE `id` = ?", id).Scan(
-		&company.CompanyID,
 		&company.Name,
 		&company.LogoURL,
 		&company.OwnerNationalID,
@@ -76,13 +62,11 @@ func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
 
 // CompanyUpdate function.
 func (u *Operation) CompanyUpdate(id string, company model.Company) error {
-
-	queryString := "UPDATE `Company` SET `updated_at` = ?, `company_id` = ?, `name` = ?, `logo_url` = ?, `owner_national_id` = ?," +
+	queryString := "UPDATE `Company` SET `updated_at` = ?, `name` = ?, `logo_url` = ?, `owner_national_id` = ?," +
 		" `owner_first_name` = ?, `owner_last_name` = ? WHERE `id` = ?"
 
 	res, err := u.DB.Exec(queryString,
 		time.Now(),
-		company.CompanyID,
 		company.Name,
 		company.LogoURL,
 		company.OwnerNationalID,
