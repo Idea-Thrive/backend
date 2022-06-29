@@ -42,9 +42,8 @@ func (u *Operation) CompanyCreate(company model.Company) error {
 
 // CompanyGet function.
 func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `logo_url`, `owner_national_id`, "+
+	errRetrieve := u.DB.QueryRow("SELECT `name`, `logo_url`, `owner_national_id`, "+
 		"`owner_first_name`, `owner_last_name`, `created_at`, `updated_at` FROM `Company` WHERE `id` = ?", id).Scan(
-		&company.CompanyID,
 		&company.Name,
 		&company.LogoURL,
 		&company.OwnerNationalID,
