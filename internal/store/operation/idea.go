@@ -67,7 +67,7 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 }
 
 func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) (res []model.Idea, err error) {
-	queryString := "SELECT `title`, `description`, `up_vote`, `down_vote`, `creator_id`, " +
+	queryString := "SELECT `id`, `title`, `description`, `up_vote`, `down_vote`, `creator_id`, " +
 		"`created_at`, `updated_at` FROM `Idea` WHERE 1"
 
 	if companyID != "" {
@@ -86,6 +86,7 @@ func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) (re
 		var ideaItem model.Idea
 
 		errScan := ideas.Scan(
+			&ideaItem.IdeaID,
 			&ideaItem.Title,
 			&ideaItem.Description,
 			&ideaItem.UpVoteCount,
