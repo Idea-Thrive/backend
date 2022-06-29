@@ -63,13 +63,11 @@ func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
 
 // CompanyUpdate function.
 func (u *Operation) CompanyUpdate(id string, company model.Company) error {
-
-	queryString := "UPDATE `Company` SET `updated_at` = ?, `company_id` = ?, `name` = ?, `logo_url` = ?, `owner_national_id` = ?," +
+	queryString := "UPDATE `Company` SET `updated_at` = ?, `name` = ?, `logo_url` = ?, `owner_national_id` = ?," +
 		" `owner_first_name` = ?, `owner_last_name` = ? WHERE `id` = ?"
 
 	res, err := u.DB.Exec(queryString,
 		time.Now(),
-		company.CompanyID,
 		company.Name,
 		company.LogoURL,
 		company.OwnerNationalID,
