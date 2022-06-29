@@ -7,30 +7,17 @@ import (
 )
 
 var (
-	errRepetitiveCompanyID       = errors.New("company with this company id already exists")
 	errNotInsertedInCompanyTable = errors.New("not inserted in company table")
 )
 
 // CompanyCreate function.
 func (u *Operation) CompanyCreate(company model.Company) error {
-	currCompanyID := ""
-	errRetrieve := u.DB.QueryRow("SELECT `company_id` FROM `Company` WHERE `company_id` = ?",
-		company.CompanyID).Scan(&currCompanyID)
 
-	if errRetrieve != nil {
-		u.Logger.Error("no company id found with this id")
-	}
-
-	if currCompanyID == company.CompanyID {
-		return errRepetitiveCompanyID
-	}
-
-	queryString := "INSERT INTO `Company`(`company_id`, `name`, `logo_url`, " +
+	queryString := "INSERT INTO `Company`(`name`, `logo_url`, " +
 		"`owner_national_id`, `owner_first_name`, `owner_last_name`, `created_at`, " +
-		"`updated_at`)  VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+		"`updated_at`)  VALUES (?, ?, ?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
-		company.CompanyID,
 		company.Name,
 		company.LogoURL,
 		company.OwnerNationalID,
