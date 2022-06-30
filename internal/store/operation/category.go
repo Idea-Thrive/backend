@@ -13,13 +13,13 @@ var (
 
 // CategoryCreate function.
 func (u *Operation) CategoryCreate(category model.Category) (err error) {
-	queryString := "INSERT INTO `Category` (`company_id`, `name`, `description`, `created_at`, `updated_at`)" +
+	queryString := "INSERT INTO `Category` (`company_id`, `name`, `color`, `created_at`, `updated_at`)" +
 		" VALUES (?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
 		category.CompanyID,
 		category.Name,
-		category.Description,
+		category.Color,
 		time.Now(),
 		time.Now(),
 	)
@@ -39,10 +39,10 @@ func (u *Operation) CategoryCreate(category model.Category) (err error) {
 
 // CategoryGet function.
 func (u *Operation) CategoryGet(id string) (category model.Category, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `description`, `created_at`, `updated_at` FROM `Category` WHERE `id` = ?", id).Scan(
+	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `color`, `created_at`, `updated_at` FROM `Category` WHERE `id` = ?", id).Scan(
 		&category.CompanyID,
 		&category.Name,
-		&category.Description,
+		&category.Color,
 		&category.CreatedAt,
 		&category.UpdatedAt,
 	)
@@ -55,7 +55,7 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 }
 
 func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err error) {
-	results, err := u.DB.Query("SELECT `name`, `description`, `created_at`, `updated_at` "+
+	results, err := u.DB.Query("SELECT `name`, `color`, `created_at`, `updated_at` "+
 		"FROM `Category` WHERE `company_id` = ?", companyID)
 
 	if err != nil {
@@ -69,7 +69,7 @@ func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err 
 
 		errScan := results.Scan(
 			&categoryItem.Name,
-			&categoryItem.Description,
+			&categoryItem.Color,
 			&categoryItem.CreatedAt,
 			&categoryItem.UpdatedAt,
 		)
