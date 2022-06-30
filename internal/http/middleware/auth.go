@@ -43,9 +43,9 @@ func (a Auth) Auth(ctx *fiber.Ctx) error {
 		})
 	}
 
-	ctx.Locals("username", payload.Username)
+	ctx.Locals("username", payload.Email)
 
-	a.Logger.Info("Successfully verified token", zap.String("username", payload.Username))
+	a.Logger.Info("Successfully verified token", zap.String("username", payload.Email))
 
 	return ctx.Next() //nolint:wrapcheck
 }
