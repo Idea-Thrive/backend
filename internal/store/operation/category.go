@@ -13,7 +13,7 @@ var (
 
 // CategoryCreate function.
 func (u *Operation) CategoryCreate(category model.Category) (err error) {
-	queryString := "INSERT INTO `CategoryID` (`company_id`, `name`, `description`, `created_at`, `updated_at`)" +
+	queryString := "INSERT INTO `Category` (`company_id`, `name`, `description`, `created_at`, `updated_at`)" +
 		" VALUES (?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
@@ -39,7 +39,7 @@ func (u *Operation) CategoryCreate(category model.Category) (err error) {
 
 // CategoryGet function.
 func (u *Operation) CategoryGet(id string) (category model.Category, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `description`, `created_at`, `updated_at` FROM `CategoryID` WHERE `id` = ?", id).Scan(
+	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `description`, `created_at`, `updated_at` FROM `Category` WHERE `id` = ?", id).Scan(
 		&category.CompanyID,
 		&category.Name,
 		&category.Description,
@@ -56,7 +56,7 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 
 func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err error) {
 	results, err := u.DB.Query("SELECT `name`, `description`, `created_at`, `updated_at` "+
-		"FROM `CategoryID` WHERE `company_id` = ?", companyID)
+		"FROM `Category` WHERE `company_id` = ?", companyID)
 
 	if err != nil {
 		err = errRetrieveQueryError
@@ -85,7 +85,7 @@ func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err 
 
 // CategoryDelete function.
 func (u *Operation) CategoryDelete(id string) error {
-	exec, err := u.DB.Exec("DELETE FROM `CategoryID` WHERE `id` = ?", id)
+	exec, err := u.DB.Exec("DELETE FROM `Category` WHERE `id` = ?", id)
 
 	if err != nil {
 		return err
