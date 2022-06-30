@@ -1,6 +1,7 @@
 package serve
 
 import (
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"log"
 	"strconv"
 
@@ -43,6 +44,8 @@ func main(cmd *cobra.Command, args []string) {
 	str := store.NewStore(connection)
 
 	app := fiber.New()
+
+	app.Use(cors.New(cors.ConfigDefault))
 
 	j := jwt.NewJWT(cfg.JWT)
 
