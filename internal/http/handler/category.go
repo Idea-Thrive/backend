@@ -37,7 +37,7 @@ func (c Category) Create(ctx *fiber.Ctx) error {
 	category := model.Category{
 		CompanyID:   req.CompanyID,
 		Name:        req.Name,
-		Description: req.Description,
+		Description: req.Color,
 		CreatedAt:   time.Now().String(),
 		UpdatedAt:   time.Now().String(),
 	}
