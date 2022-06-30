@@ -2,7 +2,7 @@ package model
 
 // Company struct.
 type Company struct {
-	CompanyID       string `json:"company_id,omitempty"`
+	ID              string `json:"id,omitempty"`
 	Name            string `json:"name,omitempty"`
 	LogoURL         string `json:"logo_url,omitempty"`
 	OwnerNationalID string `json:"owner_national_id,omitempty"`
