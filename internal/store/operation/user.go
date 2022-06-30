@@ -91,6 +91,27 @@ func (u *Operation) UserGet(id string) (user model.User, err error) {
 	return user, nil
 }
 
+// UserGetByUsername function.
+func (u *Operation) UserGetByUsername(username string) (user model.User, err error) {
+	errRetrieve := u.DB.QueryRow("SELECT `first_name`, `last_name`, `email`, `phone_number`, `photo_url`,"+
+		" `company_id`, `personnel_id`, `gender`, `role` FROM `User` WHERE `email` = ?", username).Scan(
+		&user.FirstName,
+		&user.LastName,
+		&user.Email,
+		&user.PhoneNumber,
+		&user.PhotoURL,
+		&user.CompanyID,
+		&user.PersonnelID,
+		&user.Gender,
+		&user.Role,
+	)
+	if errRetrieve != nil {
+		return user, errRetrieve
+	}
+
+	return user, nil
+}
+
 // UserUpdate function.
 func (u *Operation) UserUpdate(id string, user model.User) error {
 
