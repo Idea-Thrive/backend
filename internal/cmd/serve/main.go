@@ -45,7 +45,9 @@ func main(cmd *cobra.Command, args []string) {
 
 	app := fiber.New()
 
-	app.Use(cors.New(cors.ConfigDefault))
+	corsConfig := cors.ConfigDefault
+	corsConfig.AllowHeaders = "*"
+	app.Use(cors.New(corsConfig))
 
 	j := jwt.NewJWT(cfg.JWT)
 
