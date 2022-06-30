@@ -2,7 +2,7 @@ package model
 
 // Idea struct.
 type Idea struct {
-	IdeaID      string `json:"idea_id,omitempty"`
+	ID          string `json:"id,omitempty"`
 	Category    int    `json:"category,omitempty"`
 	Title       string `json:"title,omitempty"`
 	Description string `json:"description,omitempty"`

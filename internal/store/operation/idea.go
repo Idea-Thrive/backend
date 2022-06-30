@@ -82,7 +82,7 @@ func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) (re
 		var ideaItem model.Idea
 
 		errScan := ideas.Scan(
-			&ideaItem.IdeaID,
+			&ideaItem.ID,
 			&ideaItem.Title,
 			&ideaItem.Description,
 			&ideaItem.CreatorID,
