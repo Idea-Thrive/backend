@@ -62,16 +62,12 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
 }
 
-func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) (res []model.Idea, err error) {
+func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.Idea, err error) {
 	queryString := "SELECT `id`, `title`, `description`, `creator_id`, " +
 		"`created_at`, `updated_at` FROM `Idea` WHERE 1"
 
 	if companyID != "" {
 		queryString += fmt.Sprintf(" AND `company_id` = %s", companyID)
-	}
-
-	if category != "" {
-		queryString += fmt.Sprintf(" AND `category` = %s", category)
 	}
 
 	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)

@@ -14,7 +14,7 @@ type Operation interface {
 
 	IdeaCreate(idea model.Idea) error
 	IdeaGet(id string) (idea model.Idea, err error)
-	IdeaGetAll(companyID, category string, size, offset int) ([]model.Idea, error)
+	IdeaGetAll(companyID string, size, offset int) ([]model.Idea, error)
 	IdeaDelete(id string) error
 
 	CompanyCreate(company model.Company) error

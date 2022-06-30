@@ -71,7 +71,6 @@ func (i Idea) Get(ctx *fiber.Ctx) error {
 func (i Idea) GetAll(ctx *fiber.Ctx) error {
 	size, _ := strconv.Atoi(ctx.Query("size", "100"))   // optional
 	offset, _ := strconv.Atoi(ctx.Query("offset", "0")) // optional
-	category := ctx.Query("category")                   // optional
 	companyID := ctx.Query("company_id")                // required
 
 	if len(companyID) == 0 {
@@ -82,7 +81,7 @@ func (i Idea) GetAll(ctx *fiber.Ctx) error {
 		}) //nolint:wrapcheck
 	}
 
-	ideas, err := i.Store.IdeaGetAll(companyID, category, size, offset)
+	ideas, err := i.Store.IdeaGetAll(companyID, size, offset)
 	if err != nil {
 		i.Logger.Error("failed to get ideas", zap.Error(err))
 
