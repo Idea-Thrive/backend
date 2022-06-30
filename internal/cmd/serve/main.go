@@ -47,6 +47,7 @@ func main(cmd *cobra.Command, args []string) {
 
 	corsConfig := cors.ConfigDefault
 	corsConfig.AllowHeaders = "*"
+	corsConfig.AllowCredentials = true
 	app.Use(cors.New(corsConfig))
 
 	j := jwt.NewJWT(cfg.JWT)
