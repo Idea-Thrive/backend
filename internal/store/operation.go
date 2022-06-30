@@ -19,6 +19,7 @@ type Operation interface {
 
 	CompanyCreate(company model.Company) error
 	CompanyGet(id string) (company model.Company, err error)
+	CompanyGetAll(size, offset int) ([]model.Company, error)
 	CompanyUpdate(id string, company model.Company) error
 	CompanyDelete(id string) error
 

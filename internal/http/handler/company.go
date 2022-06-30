@@ -6,6 +6,7 @@ import (
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
+	"strconv"
 	"time"
 )
 
@@ -18,6 +19,7 @@ type Company struct {
 func (c Company) Register(group fiber.Router) {
 	group.Post("/", c.Create)
 	group.Get("/:id", c.Get)
+	group.Get("/", c.GetAll)
 	group.Delete("/:id", c.Delete)
 	group.Put("/:id", c.Update)
 }
@@ -118,4 +120,20 @@ func (c Company) Delete(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
+}
+
+func (c Company) GetAll(ctx *fiber.Ctx) error {
+	size, _ := strconv.Atoi(ctx.Query("size", "100"))   // optional
+	offset, _ := strconv.Atoi(ctx.Query("offset", "0")) // optional
+
+	companies, err := c.Store.CompanyGetAll(size, offset)
+	if err != nil {
+		c.Logger.Error("failed to get companies", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "failed to get companies",
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.Status(fiber.StatusOK).JSON(companies) //nolint:wrapcheck
 }
