@@ -3,7 +3,7 @@ package model
 // Idea struct.
 type Idea struct {
 	ID          string `json:"id,omitempty"`
-	Category    int    `json:"category,omitempty"`
+	CategoryID  string `json:"category_id,omitempty"`
 	Title       string `json:"title,omitempty"`
 	Description string `json:"description,omitempty"`
 	CreatorID   string `json:"creator_id,omitempty"`

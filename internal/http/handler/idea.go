@@ -35,7 +35,7 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 	}
 
 	idea := model.Idea{
-		Category:    req.Category,
+		CategoryID:  req.CategoryID,
 		Title:       req.Title,
 		Description: req.Description,
 		CreatorID:   req.CreatorID,

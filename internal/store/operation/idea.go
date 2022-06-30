@@ -19,7 +19,7 @@ func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
 		" `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
-		idea.Category,
+		idea.CategoryID,
 		idea.Title,
 		idea.Description,
 		idea.CreatorID,
@@ -45,7 +45,7 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
 	errRetrieve := u.DB.QueryRow("SELECT `category`, `title`, `description`,"+
 		" `creator_id`, `company_id`, `created_at`, `updated_at` FROM `Idea` WHERE `id` = ?", id).Scan(
-		&idea.Category,
+		&idea.CategoryID,
 		&idea.Title,
 		&idea.Description,
 		&idea.CreatorID,
