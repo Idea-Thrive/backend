@@ -15,15 +15,13 @@ var (
 // IdeaCreate function.
 func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
 	queryString := "INSERT INTO `Idea`(`category`, `title`, `description`," +
-		" `up_vote`, `down_vote`, `creator_id`, `company_id`," +
-		" `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+		" `creator_id`, `company_id`," +
+		" `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
-		idea.Category,
+		idea.CategoryID,
 		idea.Title,
 		idea.Description,
-		idea.UpVoteCount,
-		idea.DownVoteCount,
 		idea.CreatorID,
 		idea.CompanyID,
 		time.Now(),
@@ -45,13 +43,11 @@ func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
 
 func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
-	errRetrieve := u.DB.QueryRow("SELECT `category`, `title`, `description`, `up_vote`, `down_vote`,"+
+	errRetrieve := u.DB.QueryRow("SELECT `category`, `title`, `description`,"+
 		" `creator_id`, `company_id`, `created_at`, `updated_at` FROM `Idea` WHERE `id` = ?", id).Scan(
-		&idea.Category,
+		&idea.CategoryID,
 		&idea.Title,
 		&idea.Description,
-		&idea.UpVoteCount,
-		&idea.DownVoteCount,
 		&idea.CreatorID,
 		&idea.CompanyID,
 		&idea.CreatedAt,
@@ -67,7 +63,7 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 }
 
 func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) (res []model.Idea, err error) {
-	queryString := "SELECT `title`, `description`, `up_vote`, `down_vote`, `creator_id`, " +
+	queryString := "SELECT `id`, `title`, `description`, `creator_id`, " +
 		"`created_at`, `updated_at` FROM `Idea` WHERE 1"
 
 	if companyID != "" {
@@ -86,10 +82,9 @@ func (u *Operation) IdeaGetAll(companyID, category string, size, offset int) (re
 		var ideaItem model.Idea
 
 		errScan := ideas.Scan(
+			&ideaItem.ID,
 			&ideaItem.Title,
 			&ideaItem.Description,
-			&ideaItem.UpVoteCount,
-			&ideaItem.DownVoteCount,
 			&ideaItem.CreatorID,
 			&ideaItem.CreatedAt,
 			&ideaItem.UpdatedAt,

@@ -3,7 +3,7 @@ package jwt
 import "time"
 
 type Payload struct {
-	Username  string    `json:"username,omitempty"`
+	Email     string    `json:"email,omitempty"`
 	IssuedAt  time.Time `json:"issued_at"`
 	ExpiresAt int64     `json:"expires_at,omitempty"`
 }

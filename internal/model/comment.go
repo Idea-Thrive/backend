@@ -2,6 +2,7 @@ package model
 
 // Comment struct.
 type Comment struct {
+	ID          string `json:"id,omitempty"`
 	Score       int    `json:"score,omitempty"`
 	Description string `json:"description,omitempty"`
 	UserID      string `json:"user_id,omitempty"`

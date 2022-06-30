@@ -35,7 +35,7 @@ func (a *Authentication) login(ctx *fiber.Ctx) error {
 		})
 	}
 
-	isValid, err := a.Store.Login(req.Username, req.Password)
+	isValid, err := a.Store.Login(req.Email, req.Password)
 	if err != nil {
 		a.Logger.Error("failed to login user", zap.Error(err))
 
@@ -45,14 +45,14 @@ func (a *Authentication) login(ctx *fiber.Ctx) error {
 	}
 
 	if !isValid {
-		a.Logger.Info("user is not valid", zap.String("username", req.Username))
+		a.Logger.Info("user is not valid", zap.String("username", req.Email))
 
 		return ctx.Status(http.StatusUnauthorized).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": "user is not valid",
 		})
 	}
 
-	signedToken, expirationDate, err := a.JWT.Generate(req.Username)
+	signedToken, expirationDate, err := a.JWT.Generate(req.Email)
 	if err != nil {
 		a.Logger.Error("failed to signed user signedToken", zap.Error(err))
 
@@ -61,7 +61,7 @@ func (a *Authentication) login(ctx *fiber.Ctx) error {
 		})
 	}
 
-	a.Logger.Info("user logged in successfully", zap.String("username", req.Username))
+	a.Logger.Info("user logged in successfully", zap.String("username", req.Email))
 
 	return ctx.Status(http.StatusOK).JSON(fiber.Map{ //nolint:wrapcheck
 		"token":      signedToken,

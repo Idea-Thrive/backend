@@ -35,13 +35,11 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 	}
 
 	idea := model.Idea{
-		Category:      req.Category,
-		Title:         req.Title,
-		Description:   req.Description,
-		UpVoteCount:   req.UpVote,
-		DownVoteCount: req.DownVote,
-		CreatorID:     req.CreatorID,
-		CompanyID:     req.CompanyID,
+		CategoryID:  req.CategoryID,
+		Title:       req.Title,
+		Description: req.Description,
+		CreatorID:   req.CreatorID,
+		CompanyID:   req.CompanyID,
 	}
 
 	if err := i.Store.IdeaCreate(idea); err != nil {

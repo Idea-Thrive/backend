@@ -18,11 +18,11 @@ func NewJWT(cfg Config) *JWT {
 	return &JWT{Expiration: cfg.Expiration, Secret: cfg.Secret}
 }
 
-func (j JWT) Generate(username string) (string, int64, error) {
+func (j JWT) Generate(email string) (string, int64, error) {
 	expirationDate := time.Now().Add(j.Expiration).Unix()
 
 	payload := &Payload{
-		Username:  username,
+		Email:     email,
 		IssuedAt:  time.Now(),
 		ExpiresAt: expirationDate,
 	}
