@@ -2,6 +2,7 @@ package operation
 
 import (
 	"errors"
+	"fmt"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"time"
 )
@@ -58,6 +59,39 @@ func (u *Operation) CompanyGet(id string) (company model.Company, err error) {
 	}
 
 	return company, nil
+}
+
+// CompanyGetAll function.
+func (u *Operation) CompanyGetAll(size, offset int) (res []model.Company, err error) {
+	queryString := "SELECT `id`, `name`, `logo_url`, `owner_national_id`, `owner_first_name`, " +
+		"`owner_last_name`, `created_at`, `updated_at` FROM `Company`"
+
+	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
+
+	companies, err := u.DB.Query(queryString)
+
+	for companies.Next() {
+		var companyItem model.Company
+
+		errScan := companies.Scan(
+			&companyItem.ID,
+			&companyItem.Name,
+			&companyItem.LogoURL,
+			&companyItem.OwnerNationalID,
+			&companyItem.OwnerFirstName,
+			&companyItem.OwnerLastName,
+			&companyItem.CreatedAt,
+			&companyItem.UpdatedAt,
+		)
+
+		if errScan != nil {
+			return res, errScan
+		}
+
+		res = append(res, companyItem)
+	}
+
+	return res, nil
 }
 
 // CompanyUpdate function.
