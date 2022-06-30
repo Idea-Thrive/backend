@@ -38,13 +38,14 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 		u.Logger.Error("user with this email doesn't exist")
 	}
 
-	queryString := "INSERT INTO `User` (`first_name`, `last_name`, `email`, `phone_number`, `photo_url`, `company_id`, `personnel_id`," +
-		" `gender`, `role`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+	queryString := "INSERT INTO `User` (`first_name`, `last_name`, `email`, `password`, `phone_number`, `photo_url`, `company_id`, `personnel_id`," +
+		" `gender`, `role`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
 		user.FirstName,
 		user.LastName,
 		user.Email,
+		user.Password,
 		user.PhoneNumber,
 		user.PhotoURL,
 		user.CompanyID,
@@ -93,7 +94,7 @@ func (u *Operation) UserGet(id string) (user model.User, err error) {
 // UserUpdate function.
 func (u *Operation) UserUpdate(id string, user model.User) error {
 
-	queryString := "UPDATE `User` SET `updated_at` = ?, `first_name` = ?, `last_name` = ?, `email` = ?, `phone_number` = ?," +
+	queryString := "UPDATE `User` SET `updated_at` = ?, `first_name` = ?, `last_name` = ?, `email` = ?, `password` = ?, `phone_number` = ?," +
 		" `photo_url` = ?, `company_id` = ?, `personnel_id` = ?, `gender` = ?, `role` = ? WHERE `id` = ?"
 
 	res, err := u.DB.Exec(queryString,
@@ -101,6 +102,7 @@ func (u *Operation) UserUpdate(id string, user model.User) error {
 		user.FirstName,
 		user.LastName,
 		user.Email,
+		user.Password,
 		user.PhoneNumber,
 		user.PhotoURL,
 		user.CompanyID,
