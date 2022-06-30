@@ -35,11 +35,11 @@ func (c Category) Create(ctx *fiber.Ctx) error {
 	}
 
 	category := model.Category{
-		CompanyID:   req.CompanyID,
-		Name:        req.Name,
-		Description: req.Description,
-		CreatedAt:   time.Now().String(),
-		UpdatedAt:   time.Now().String(),
+		CompanyID: req.CompanyID,
+		Name:      req.Name,
+		Color:     req.Color,
+		CreatedAt: time.Now().String(),
+		UpdatedAt: time.Now().String(),
 	}
 
 	if err := c.Store.CategoryCreate(category); err != nil {
