@@ -39,7 +39,7 @@ func (a *Authentication) login(ctx *fiber.Ctx) error {
 	if err != nil {
 		a.Logger.Error("failed to login user", zap.Error(err))
 
-		return ctx.Status(http.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(http.StatusForbidden).JSON(fiber.Map{ //nolint:wrapcheck
 			"error": "failed to login user",
 		})
 	}
