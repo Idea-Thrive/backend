@@ -107,6 +107,7 @@ func (u User) Update(ctx *fiber.Ctx) error {
 		FirstName:   req.FirstName,
 		LastName:    req.LastName,
 		Email:       req.Email,
+		Password:    req.Password,
 		PhoneNumber: req.PhoneNumber,
 		PhotoURL:    req.PhotoURL,
 		CompanyID:   req.CompanyID,
