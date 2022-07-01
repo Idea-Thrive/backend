@@ -14,7 +14,7 @@ var (
 
 // IdeaCreate function.
 func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
-	queryString := "INSERT INTO `Idea`(`category`, `title`, `description`," +
+	queryString := "INSERT INTO `Idea`(`category_id`, `title`, `description`," +
 		" `creator_id`, `company_id`," +
 		" `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?)"
 
@@ -43,7 +43,7 @@ func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
 
 func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
-	errRetrieve := u.DB.QueryRow("SELECT `category`, `title`, `description`,"+
+	errRetrieve := u.DB.QueryRow("SELECT `category_id`, `title`, `description`,"+
 		" `creator_id`, `company_id`, `created_at`, `updated_at` FROM `Idea` WHERE `id` = ?", id).Scan(
 		&idea.CategoryID,
 		&idea.Title,
@@ -63,7 +63,7 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 }
 
 func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.Idea, err error) {
-	queryString := "SELECT `id`, `title`, `description`, `creator_id`, " +
+	queryString := "SELECT `id`, `title`, `description`, `category_id`, `creator_id`, " +
 		"`created_at`, `updated_at` FROM `Idea` WHERE 1"
 
 	if companyID != "" {
@@ -81,6 +81,7 @@ func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.
 			&ideaItem.ID,
 			&ideaItem.Title,
 			&ideaItem.Description,
+			&ideaItem.CategoryID,
 			&ideaItem.CreatorID,
 			&ideaItem.CreatedAt,
 			&ideaItem.UpdatedAt,
