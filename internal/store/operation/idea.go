@@ -41,6 +41,7 @@ func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
 	return err
 }
 
+// IdeaGet function.
 func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
 	errRetrieve := u.DB.QueryRow("SELECT `category_id`, `title`, `description`,"+
@@ -62,6 +63,7 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
 }
 
+// IdeaGetAll function.
 func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.Idea, err error) {
 	queryString := "SELECT `id`, `title`, `description`, `category_id`, `creator_id`, " +
 		"`created_at`, `updated_at` FROM `Idea` WHERE 1"
