@@ -65,7 +65,7 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
 // IdeaGetAll function.
 func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.Idea, err error) {
-	queryString := "SELECT i.id, i.title, c.name, i.description, i.category_id, i.creator_id, " +
+	queryString := "SELECT i.id, i.title, c.name, c.color, i.description, i.category_id, i.creator_id, " +
 		"i.created_at, i.updated_at FROM Idea i INNER JOIN Category c ON c.company_id = i.company_id WHERE 1"
 
 	if companyID != "" {
@@ -83,6 +83,7 @@ func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.
 			&ideaItem.ID,
 			&ideaItem.Title,
 			&ideaItem.CategoryName,
+			&ideaItem.CategoryColor,
 			&ideaItem.Description,
 			&ideaItem.CategoryID,
 			&ideaItem.CreatorID,
