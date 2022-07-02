@@ -16,6 +16,7 @@ type Operation interface {
 	IdeaCreate(idea model.Idea) error
 	IdeaGet(id string) (idea model.Idea, err error)
 	IdeaGetAll(companyID string, size, offset int) ([]model.Idea, error)
+	IdeaEditStatus(id string) error
 	IdeaDelete(id string) error
 
 	CompanyCreate(company model.Company) error
