@@ -18,7 +18,7 @@ func Execute() {
 	//	serve.Command(),
 	//)
 
-	err := serve.Command().Execute() //nolint:ifshort
+	err := serve.Command().Execute()
 	if err != nil {
 		os.Exit(1)
 	}
