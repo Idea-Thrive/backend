@@ -27,7 +27,7 @@ func (u *Operation) CommentCreate(comment model.Comment) (err error) {
 		time.Now(),
 	)
 	if err != nil {
-		return err //nolint:wrapcheck
+		return err
 	}
 
 	lid, _ := result.LastInsertId()

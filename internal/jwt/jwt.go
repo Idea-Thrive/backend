@@ -34,7 +34,7 @@ func (j JWT) Generate(email string) (string, int64, error) {
 
 	signedToken, err := token.SignedString([]byte(j.Secret))
 	if err != nil {
-		return "", 0, err //nolint:wrapcheck
+		return "", 0, err
 	}
 
 	return signedToken, expirationDate, nil
@@ -52,7 +52,7 @@ func (j JWT) Verify(token string) (*Payload, error) {
 
 	payload := new(Payload)
 	if _, err := jwt.ParseWithClaims(token, payload, keyFunc); err != nil {
-		return nil, err //nolint:wrapcheck
+		return nil, err
 	}
 
 	return payload, nil

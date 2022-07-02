@@ -18,7 +18,7 @@ func (u *Operation) CriteriaCreate(criteria model.Criteria) error {
 		criteria.Name,
 	)
 	if err != nil {
-		return err //nolint:wrapcheck
+		return err
 	}
 
 	lid, _ := result.LastInsertId()

@@ -28,7 +28,7 @@ func (u *Operation) CompanyCreate(company model.Company) error {
 		time.Now(),
 	)
 	if err != nil {
-		return err //nolint:wrapcheck
+		return err
 	}
 
 	lid, _ := result.LastInsertId()

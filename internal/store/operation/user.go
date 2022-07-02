@@ -57,7 +57,7 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 		time.Now(),
 	)
 	if err != nil {
-		return err //nolint:wrapcheck
+		return err
 	}
 
 	lid, _ := result.LastInsertId()
@@ -93,6 +93,7 @@ func (u *Operation) UserGet(id string) (user model.User, err error) {
 	return user, nil
 }
 
+// UserGetAll function.
 func (u *Operation) UserGetAll(size, offset int) (res []model.User, err error) {
 	queryString := "SELECT `id`, `first_name`, `last_name`," +
 		" `email`, `phone_number`, `photo_url`, `company_id`, `personnel_id`, `gender`, `role` FROM `User` "

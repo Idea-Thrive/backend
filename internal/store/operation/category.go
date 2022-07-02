@@ -24,7 +24,7 @@ func (u *Operation) CategoryCreate(category model.Category) (err error) {
 		time.Now(),
 	)
 	if err != nil {
-		return err //nolint:wrapcheck
+		return err
 	}
 
 	lid, _ := result.LastInsertId()
@@ -54,6 +54,7 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 	return category, nil
 }
 
+// CategoryGetAll function.
 func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err error) {
 	results, err := u.DB.Query("SELECT `id`, `name`, `color`, `created_at`, `updated_at` "+
 		"FROM `Category` WHERE `company_id` = ?", companyID)

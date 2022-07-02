@@ -28,7 +28,7 @@ func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
 		time.Now(),
 	)
 	if err != nil {
-		return err //nolint:wrapcheck
+		return err
 	}
 
 	lid, _ := result.LastInsertId()
@@ -105,6 +105,7 @@ func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.
 	return res, nil
 }
 
+// IdeaEditStatus function.
 func (u *Operation) IdeaEditStatus(id string) error {
 	exec, err := u.DB.Exec("UPDATE `Idea` SET `is_approved` = true WHERE `id` = ?", id)
 
