@@ -102,6 +102,29 @@ func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.
 	return res, nil
 }
 
+func (u *Operation) IdeaEditStatus(id string) error {
+	exec, err := u.DB.Exec("UPDATE `Idea` SET `is_approved` = true WHERE `id` = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+
+	return nil
+}
+
 // IdeaDelete function.
 func (u *Operation) IdeaDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `Idea` WHERE `id` = ?", id)
@@ -122,5 +145,6 @@ func (u *Operation) IdeaDelete(id string) error {
 
 		return err
 	}
+
 	return nil
 }
