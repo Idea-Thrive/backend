@@ -22,6 +22,7 @@ func (u User) Register(group fiber.Router) {
 	group.Get("/info", u.GetByUsername)
 	group.Get("/:id", u.Get)
 	group.Put("/:id", u.Update)
+	group.Put("/role/:id", u.ChangeRole)
 	group.Delete("/:id", u.Delete)
 }
 
@@ -128,6 +129,31 @@ func (u User) Update(ctx *fiber.Ctx) error {
 
 	return ctx.Status(fiber.StatusOK).JSON(req) //nolint:wrapcheck
 
+}
+
+func (u User) ChangeRole(ctx *fiber.Ctx) error {
+	userID := ctx.AllParams()["id"]
+
+	req := new(request.UserCreation)
+	if err := ctx.BodyParser(req); err != nil {
+		u.Logger.Error("failed to parse request body", zap.Error(err))
+
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
+			"message": err.Error(),
+		})
+	}
+
+	newUserRole := req.Role
+
+	if err := u.Store.UserChangeRole(userID, newUserRole); err != nil {
+		u.Logger.Error("failed to update user", zap.Error(err))
+
+		return ctx.Status(fiber.StatusExpectationFailed).JSON(req) //nolint:wrapcheck
+	}
+
+	u.Logger.Info("user updated successfully")
+
+	return ctx.Status(fiber.StatusOK).JSON(req) //nolint:wrapcheck
 }
 
 // Delete function.
