@@ -1,5 +1,6 @@
 package request
 
+// IdeaCreation struct.
 type IdeaCreation struct {
 	CategoryID  string `json:"category_id"`
 	Title       string `json:"title"`

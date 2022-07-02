@@ -1,5 +1,6 @@
 package request
 
+// CompanyCreation struct.
 type CompanyCreation struct {
 	Name            string `json:"name"`
 	LogoURL         string `json:"logo_url"`
