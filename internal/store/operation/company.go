@@ -70,6 +70,9 @@ func (u *Operation) CompanyGetAll(size, offset int) (res []model.Company, err er
 	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
 
 	companies, err := u.DB.Query(queryString)
+	if err != nil {
+		u.Logger.Error(err.Error())
+	}
 
 	for companies.Next() {
 		var companyItem model.Company
@@ -96,7 +99,7 @@ func (u *Operation) CompanyGetAll(size, offset int) (res []model.Company, err er
 }
 
 // CompanyUpdate function.
-func (u *Operation) CompanyUpdate(id string, company model.Company) error {
+func (u *Operation) CompanyUpdate(companyID string, company model.Company) error {
 	queryString := "UPDATE `Company` SET `updated_at` = ?, `name` = ?, `logo_url` = ?, `owner_national_id` = ?," +
 		" `owner_first_name` = ?, `owner_last_name` = ? WHERE `id` = ?"
 
@@ -107,7 +110,7 @@ func (u *Operation) CompanyUpdate(id string, company model.Company) error {
 		company.OwnerNationalID,
 		company.OwnerFirstName,
 		company.OwnerLastName,
-		id,
+		companyID,
 	)
 	if err != nil {
 		err = errNoRowsUpdated

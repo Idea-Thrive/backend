@@ -55,6 +55,9 @@ func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset in
 	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
 
 	ideas, err := u.DB.Query(queryString)
+	if err != nil {
+		u.Logger.Error(err.Error())
+	}
 
 	for ideas.Next() {
 		var commentItem model.Comment

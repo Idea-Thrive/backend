@@ -77,6 +77,9 @@ func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.
 	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
 
 	ideas, err := u.DB.Query(queryString)
+	if err != nil {
+		u.Logger.Error(err.Error())
+	}
 
 	for ideas.Next() {
 		var ideaItem model.Idea

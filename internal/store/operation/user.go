@@ -101,6 +101,9 @@ func (u *Operation) UserGetAll(size, offset int) (res []model.User, err error) {
 	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
 
 	users, err := u.DB.Query(queryString)
+	if err != nil {
+		u.Logger.Error(err.Error())
+	}
 
 	for users.Next() {
 		var user model.User
