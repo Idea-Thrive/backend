@@ -190,6 +190,28 @@ func (u *Operation) UserUpdate(id string, user model.User) error {
 	return nil
 }
 
+func (u *Operation) UserChangeRole(id string, newUserRole string) error {
+	exec, err := u.DB.Exec("UPDATE `User` SET `role` = ? WHERE `id` = ?", newUserRole, id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+	return nil
+}
+
 // UserDelete function.
 func (u *Operation) UserDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `User` WHERE `id` = ?", id)
