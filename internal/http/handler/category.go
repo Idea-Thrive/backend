@@ -10,6 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Category struct.
 type Category struct {
 	Store  *store.Store
 	Logger *zap.Logger
@@ -23,6 +24,7 @@ func (c Category) Register(group fiber.Router) {
 	group.Delete("/:id", c.Delete)
 }
 
+// Create function.
 func (c Category) Create(ctx *fiber.Ctx) error {
 	req := new(request.CategoryCreation)
 
@@ -55,6 +57,7 @@ func (c Category) Create(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusCreated) //nolint:wrapcheck
 }
 
+// Get function.
 func (c Category) Get(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
@@ -70,6 +73,7 @@ func (c Category) Get(ctx *fiber.Ctx) error {
 	return ctx.JSON(category) //nolint:wrapcheck
 }
 
+// GetAll function.
 func (c Category) GetAll(ctx *fiber.Ctx) error {
 	companyID := ctx.Query("company_id")
 
@@ -93,6 +97,7 @@ func (c Category) GetAll(ctx *fiber.Ctx) error {
 	return ctx.JSON(categories) //nolint:wrapcheck
 }
 
+// Delete function.
 func (c Category) Delete(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 

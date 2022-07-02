@@ -10,6 +10,7 @@ import (
 	"time"
 )
 
+// Company function.
 type Company struct {
 	Store  *store.Store
 	Logger *zap.Logger
@@ -24,6 +25,7 @@ func (c Company) Register(group fiber.Router) {
 	group.Put("/:id", c.Update)
 }
 
+// Create function.
 func (c Company) Create(ctx *fiber.Ctx) error {
 	req := new(request.CompanyCreation)
 
@@ -56,6 +58,7 @@ func (c Company) Create(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusOK) //nolint:wrapcheck
 }
 
+// Get function.
 func (c Company) Get(ctx *fiber.Ctx) error {
 	id := ctx.AllParams()["id"]
 

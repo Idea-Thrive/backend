@@ -24,6 +24,7 @@ func (i Idea) Register(group fiber.Router) {
 	group.Delete("/:id", i.Delete)
 }
 
+// Create function.
 func (i Idea) Create(ctx *fiber.Ctx) error {
 	req := new(request.IdeaCreation)
 
@@ -54,6 +55,7 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusOK)
 }
 
+// Get function,
 func (i Idea) Get(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
@@ -69,6 +71,7 @@ func (i Idea) Get(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(idea) //nolint:wrapcheck
 }
 
+// GetAll function.
 func (i Idea) GetAll(ctx *fiber.Ctx) error {
 	size, _ := strconv.Atoi(ctx.Query("size", "100"))   // optional
 	offset, _ := strconv.Atoi(ctx.Query("offset", "0")) // optional
@@ -94,6 +97,7 @@ func (i Idea) GetAll(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(ideas) //nolint:wrapcheck
 }
 
+// EditStatus function.
 func (i Idea) EditStatus(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
@@ -108,6 +112,7 @@ func (i Idea) EditStatus(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusOK)
 }
 
+// Delete function.
 func (i Idea) Delete(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 

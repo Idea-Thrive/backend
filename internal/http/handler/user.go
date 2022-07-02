@@ -77,6 +77,7 @@ func (u User) Get(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(user) //nolint:wrapcheck
 }
 
+// GetByUsername function.
 func (u User) GetByUsername(ctx *fiber.Ctx) error {
 	username := ctx.Locals("username").(string)
 
@@ -92,6 +93,7 @@ func (u User) GetByUsername(ctx *fiber.Ctx) error {
 	return ctx.Status(fiber.StatusOK).JSON(user) //nolint:wrapcheck
 }
 
+// Update function.
 func (u User) Update(ctx *fiber.Ctx) error {
 	userID := ctx.AllParams()["id"]
 
