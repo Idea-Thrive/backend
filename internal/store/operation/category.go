@@ -55,7 +55,7 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 }
 
 func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err error) {
-	results, err := u.DB.Query("SELECT `name`, `color`, `created_at`, `updated_at` "+
+	results, err := u.DB.Query("SELECT `id`, `name`, `color`, `created_at`, `updated_at` "+
 		"FROM `Category` WHERE `company_id` = ?", companyID)
 
 	if err != nil {
@@ -68,6 +68,7 @@ func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err 
 		var categoryItem model.Category
 
 		errScan := results.Scan(
+			&categoryItem.ID,
 			&categoryItem.Name,
 			&categoryItem.Color,
 			&categoryItem.CreatedAt,

@@ -42,7 +42,7 @@ func (u *Operation) CommentCreate(comment model.Comment) (err error) {
 
 // CommentGetAll function.
 func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset int) (res []model.Comment, err error) {
-	queryString := "SELECT `company_id`, `user_id`, `score`, `description`, `created_at`, `updated_at` FROM `Comment` WHERE 1"
+	queryString := "SELECT  `id`, `company_id`, `user_id`, `score`, `description`, `created_at`, `updated_at` FROM `Comment` WHERE 1"
 
 	if ideaID != "" {
 		queryString += fmt.Sprintf(" AND idea_id = %s", ideaID)
@@ -60,6 +60,7 @@ func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset in
 		var commentItem model.Comment
 
 		errScan := ideas.Scan(
+			&commentItem.ID,
 			&commentItem.CompanyID,
 			&commentItem.UserID,
 			&commentItem.Score,
