@@ -9,15 +9,18 @@ import (
 
 var errInvalidPayload = errors.New("invalid payload")
 
+// JWT struct.
 type JWT struct {
 	Expiration time.Duration
 	Secret     string
 }
 
+// NewJWT function.
 func NewJWT(cfg Config) *JWT {
 	return &JWT{Expiration: cfg.Expiration, Secret: cfg.Secret}
 }
 
+// Generate function.
 func (j JWT) Generate(email string) (string, int64, error) {
 	expirationDate := time.Now().Add(j.Expiration).Unix()
 
@@ -37,6 +40,7 @@ func (j JWT) Generate(email string) (string, int64, error) {
 	return signedToken, expirationDate, nil
 }
 
+// Verify function.
 func (j JWT) Verify(token string) (*Payload, error) {
 	keyFunc := func(token *jwt.Token) (interface{}, error) {
 		if token.Method.Alg() != jwt.SigningMethodHS256.Alg() {
