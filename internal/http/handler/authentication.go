@@ -30,7 +30,7 @@ func (a *Authentication) login(ctx *fiber.Ctx) error {
 	if err := ctx.BodyParser(&req); err != nil {
 		a.Logger.Error("failed to parse body", zap.Error(err))
 
-		return ctx.Status(http.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(http.StatusBadRequest).JSON(fiber.Map{
 			"error": "failed to parse body",
 		})
 	}
@@ -39,7 +39,7 @@ func (a *Authentication) login(ctx *fiber.Ctx) error {
 	if err != nil {
 		a.Logger.Error("failed to login user", zap.Error(err))
 
-		return ctx.Status(http.StatusForbidden).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(http.StatusForbidden).JSON(fiber.Map{
 			"error": "failed to login user",
 		})
 	}
@@ -47,7 +47,7 @@ func (a *Authentication) login(ctx *fiber.Ctx) error {
 	if !isValid {
 		a.Logger.Info("user is not valid", zap.String("username", req.Email))
 
-		return ctx.Status(http.StatusUnauthorized).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(http.StatusUnauthorized).JSON(fiber.Map{
 			"error": "user is not valid",
 		})
 	}
@@ -56,14 +56,14 @@ func (a *Authentication) login(ctx *fiber.Ctx) error {
 	if err != nil {
 		a.Logger.Error("failed to signed user signedToken", zap.Error(err))
 
-		return ctx.Status(http.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(http.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to signed user signedToken",
 		})
 	}
 
 	a.Logger.Info("user logged in successfully", zap.String("username", req.Email))
 
-	return ctx.Status(http.StatusOK).JSON(fiber.Map{ //nolint:wrapcheck
+	return ctx.Status(http.StatusOK).JSON(fiber.Map{
 		"token":      signedToken,
 		"expiration": expirationDate,
 	})
