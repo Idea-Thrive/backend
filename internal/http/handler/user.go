@@ -1,12 +1,13 @@
 package handler
 
 import (
+	"strconv"
+
 	"github.com/Idea-Thrive/backend/internal/http/request"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
-	"strconv"
 )
 
 // User struct.
@@ -129,7 +130,6 @@ func (u User) Update(ctx *fiber.Ctx) error {
 	u.Logger.Info("user updated successfully")
 
 	return ctx.Status(fiber.StatusOK).JSON(req)
-
 }
 
 // Delete function.
@@ -147,6 +147,7 @@ func (u User) Delete(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusOK)
 }
 
+// GetAll function.
 func (u User) GetAll(ctx *fiber.Ctx) error {
 	size, _ := strconv.Atoi(ctx.Query("size", "100"))   // optional
 	offset, _ := strconv.Atoi(ctx.Query("offset", "0")) // optional

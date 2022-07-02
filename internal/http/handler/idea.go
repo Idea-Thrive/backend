@@ -1,12 +1,13 @@
 package handler
 
 import (
+	"strconv"
+
 	"github.com/Idea-Thrive/backend/internal/http/request"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
-	"strconv"
 )
 
 // Idea struct.
@@ -55,7 +56,7 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusOK)
 }
 
-// Get function,
+// Get function.
 func (i Idea) Get(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
