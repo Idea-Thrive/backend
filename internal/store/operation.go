@@ -11,6 +11,7 @@ type Operation interface {
 	UserGetAll(size, offset int) (users []model.User, err error)
 	UserGetByUsername(username string) (user model.User, err error)
 	UserUpdate(id string, user model.User) error
+	UserChangeRole(id string, newUserRole string) error
 	UserDelete(id string) error
 
 	IdeaCreate(idea model.Idea) error
