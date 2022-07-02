@@ -20,6 +20,7 @@ func (i Idea) Register(group fiber.Router) {
 	group.Post("/", i.Create)
 	group.Get("/:id", i.Get)
 	group.Get("/", i.GetAll)
+	group.Put("/status/:id", i.EditStatus)
 	group.Delete("/:id", i.Delete)
 }
 
@@ -91,6 +92,20 @@ func (i Idea) GetAll(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.Status(fiber.StatusOK).JSON(ideas) //nolint:wrapcheck
+}
+
+func (i Idea) EditStatus(ctx *fiber.Ctx) error {
+	id := ctx.Params("id")
+
+	if err := i.Store.IdeaEditStatus(id); err != nil {
+		i.Logger.Error("failed to change status idea", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "failed to change status of idea",
+		}) //nolint:wrapcheck
+	}
+
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
 func (i Idea) Delete(ctx *fiber.Ctx) error {

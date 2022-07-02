@@ -8,6 +8,7 @@ type Idea struct {
 	CategoryColor string  `json:"category_color"`
 	Title         string  `json:"title,omitempty"`
 	Description   string  `json:"description,omitempty"`
+	IsApproved    bool    `json:"is_approved"`
 	Score         float64 `json:"score"`
 	CreatorID     string  `json:"creator_id,omitempty"`
 	CompanyID     string  `json:"company_id,omitempty"`

@@ -43,12 +43,13 @@ func (u *Operation) IdeaCreate(idea model.Idea) (err error) {
 
 // IdeaGet function.
 func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
-
-	errRetrieve := u.DB.QueryRow("SELECT `category_id`, `title`, `description`,"+
+	errRetrieve := u.DB.QueryRow("SELECT `id`, `category_id`, `title`, `description`, `is_approved`,"+
 		" `creator_id`, `company_id`, `created_at`, `updated_at` FROM `Idea` WHERE `id` = ?", id).Scan(
+		&idea.ID,
 		&idea.CategoryID,
 		&idea.Title,
 		&idea.Description,
+		&idea.IsApproved,
 		&idea.CreatorID,
 		&idea.CompanyID,
 		&idea.CreatedAt,
@@ -60,12 +61,13 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 	}
 
 	return idea, nil
-
 }
 
 // IdeaGetAll function.
 func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.Idea, err error) {
-	queryString := "SELECT i.id, i.title, c.name, c.color, i.description, (SELECT AVG(cc.score) FROM Comment c INNER JOIN CriteriaComment cc ON c.id = cc.comment_id WHERE c.idea_id = idea_id) AS score, i.category_id, i.creator_id, " +
+	queryString := "SELECT i.id, i.title, c.name, c.color, i.description, i.is_approved, " +
+		"(SELECT AVG(cc.score) FROM Comment c INNER JOIN CriteriaComment cc ON c.id = cc.comment_id " +
+		"WHERE c.idea_id = idea_id) AS score, i.category_id, i.creator_id, " +
 		"i.created_at, i.updated_at FROM Idea i INNER JOIN Category c ON c.company_id = i.company_id WHERE 1"
 
 	if companyID != "" {
@@ -85,6 +87,7 @@ func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.
 			&ideaItem.CategoryName,
 			&ideaItem.CategoryColor,
 			&ideaItem.Description,
+			&ideaItem.IsApproved,
 			&ideaItem.Score,
 			&ideaItem.CategoryID,
 			&ideaItem.CreatorID,
@@ -100,6 +103,29 @@ func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.
 	}
 
 	return res, nil
+}
+
+func (u *Operation) IdeaEditStatus(id string) error {
+	exec, err := u.DB.Exec("UPDATE `Idea` SET `is_approved` = true WHERE `id` = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	rAffected, err := exec.RowsAffected()
+	if err != nil {
+		err = errCallingRowsAffected
+
+		return err
+	}
+
+	if rAffected == 0 {
+		err = errNoRowsAffected
+
+		return err
+	}
+
+	return nil
 }
 
 // IdeaDelete function.
@@ -122,5 +148,6 @@ func (u *Operation) IdeaDelete(id string) error {
 
 		return err
 	}
+
 	return nil
 }
