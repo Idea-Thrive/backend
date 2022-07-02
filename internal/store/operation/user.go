@@ -129,8 +129,9 @@ func (u *Operation) UserGetAll(size, offset int) (res []model.User, err error) {
 
 // UserGetByUsername function.
 func (u *Operation) UserGetByUsername(username string) (user model.User, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `first_name`, `last_name`, `email`, `phone_number`, `photo_url`,"+
+	errRetrieve := u.DB.QueryRow("SELECT `id`, `first_name`, `last_name`, `email`, `phone_number`, `photo_url`,"+
 		" `company_id`, `personnel_id`, `gender`, `role` FROM `User` WHERE `email` = ?", username).Scan(
+		&user.ID,
 		&user.FirstName,
 		&user.LastName,
 		&user.Email,
