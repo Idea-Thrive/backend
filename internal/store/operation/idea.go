@@ -66,7 +66,9 @@ func (u *Operation) IdeaGet(id string) (idea model.Idea, err error) {
 
 // IdeaGetAll function.
 func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.Idea, err error) {
-	queryString := "SELECT i.id, i.title, c.name, c.color, i.description, (SELECT AVG(cc.score) FROM Comment c INNER JOIN CriteriaComment cc ON c.id = cc.comment_id WHERE c.idea_id = idea_id) AS score, i.category_id, i.creator_id, " +
+	queryString := "SELECT i.id, i.title, c.name, c.color, i.description, i.is_approved, " +
+		"(SELECT AVG(cc.score) FROM Comment c INNER JOIN CriteriaComment cc ON c.id = cc.comment_id " +
+		"WHERE c.idea_id = idea_id) AS score, i.category_id, i.creator_id, " +
 		"i.created_at, i.updated_at FROM Idea i INNER JOIN Category c ON c.company_id = i.company_id WHERE 1"
 
 	if companyID != "" {
@@ -86,6 +88,7 @@ func (u *Operation) IdeaGetAll(companyID string, size, offset int) (res []model.
 			&ideaItem.CategoryName,
 			&ideaItem.CategoryColor,
 			&ideaItem.Description,
+			&ideaItem.IsApproved,
 			&ideaItem.Score,
 			&ideaItem.CategoryID,
 			&ideaItem.CreatorID,
