@@ -8,6 +8,7 @@ type Operation interface {
 
 	UserCreate(user model.User) error
 	UserGet(id string) (user model.User, err error)
+	UserGetAll(size, offset int) (users []model.User, err error)
 	UserGetByUsername(username string) (user model.User, err error)
 	UserUpdate(id string, user model.User) error
 	UserDelete(id string) error

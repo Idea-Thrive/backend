@@ -2,6 +2,7 @@ package operation
 
 import (
 	"errors"
+	"fmt"
 	"time"
 
 	"github.com/Idea-Thrive/backend/internal/model"
@@ -71,8 +72,9 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 
 // UserGet function.
 func (u *Operation) UserGet(id string) (user model.User, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `first_name`, `last_name`,"+
+	errRetrieve := u.DB.QueryRow("SELECT `id`, `first_name`, `last_name`,"+
 		" `email`, `phone_number`, `photo_url`, `company_id`, `personnel_id`, `gender`, `role` FROM `User` WHERE `id` = ?", id).Scan(
+		&user.ID,
 		&user.FirstName,
 		&user.LastName,
 		&user.Email,
@@ -89,6 +91,40 @@ func (u *Operation) UserGet(id string) (user model.User, err error) {
 	}
 
 	return user, nil
+}
+
+func (u *Operation) UserGetAll(size, offset int) (res []model.User, err error) {
+	queryString := "SELECT `id`, `first_name`, `last_name`," +
+		" `email`, `phone_number`, `photo_url`, `company_id`, `personnel_id`, `gender`, `role` FROM `User` "
+
+	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
+
+	users, err := u.DB.Query(queryString)
+
+	for users.Next() {
+		var user model.User
+
+		errScan := users.Scan(
+			&user.ID,
+			&user.FirstName,
+			&user.LastName,
+			&user.Email,
+			&user.PhoneNumber,
+			&user.PhotoURL,
+			&user.CompanyID,
+			&user.PersonnelID,
+			&user.Gender,
+			&user.Role,
+		)
+
+		if errScan != nil {
+			return res, errScan
+		}
+
+		res = append(res, user)
+	}
+
+	return res, nil
 }
 
 // UserGetByUsername function.

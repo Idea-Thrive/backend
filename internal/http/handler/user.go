@@ -6,6 +6,7 @@ import (
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
+	"strconv"
 )
 
 // User struct.
@@ -17,6 +18,7 @@ type User struct {
 // Register function.
 func (u User) Register(group fiber.Router) {
 	group.Post("/", u.Create)
+	group.Get("/", u.GetAll)
 	group.Get("/info", u.GetByUsername)
 	group.Get("/:id", u.Get)
 	group.Put("/:id", u.Update)
@@ -141,4 +143,22 @@ func (u User) Delete(ctx *fiber.Ctx) error {
 	}
 
 	return ctx.SendStatus(fiber.StatusOK) //nolint:wrapcheck
+}
+
+func (u User) GetAll(ctx *fiber.Ctx) error {
+	size, _ := strconv.Atoi(ctx.Query("size", "100"))   // optional
+	offset, _ := strconv.Atoi(ctx.Query("offset", "0")) // optional
+
+	users, err := u.Store.UserGetAll(size, offset)
+	if err != nil {
+		u.Logger.Error("failed to get users from store", zap.Error(err))
+
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"message": err.Error(),
+		}) //nolint:wrapcheck
+	}
+
+	u.Logger.Info("users retrieved successfully")
+
+	return ctx.Status(fiber.StatusOK).JSON(users) //nolint:wrapcheck
 }
