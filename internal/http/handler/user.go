@@ -132,7 +132,7 @@ func (u User) Update(ctx *fiber.Ctx) error {
 }
 
 func (u User) ChangeRole(ctx *fiber.Ctx) error {
-	userID := ctx.Get("id")
+	userID := ctx.AllParams()["id"]
 
 	req := new(request.UserCreation)
 	if err := ctx.BodyParser(req); err != nil {
