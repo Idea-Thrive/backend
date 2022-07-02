@@ -50,6 +50,8 @@ func (c Category) Create(ctx *fiber.Ctx) error {
 		})
 	}
 
+	c.Logger.Info("category created", zap.Any("category", category))
+
 	return ctx.SendStatus(fiber.StatusCreated) //nolint:wrapcheck
 }
 
