@@ -1,9 +1,10 @@
 package serve
 
 import (
-	"github.com/gofiber/fiber/v2/middleware/cors"
 	"log"
 	"strconv"
+
+	"github.com/gofiber/fiber/v2/middleware/cors"
 
 	"github.com/Idea-Thrive/backend/internal/config"
 	"github.com/Idea-Thrive/backend/internal/http"
@@ -39,6 +40,7 @@ func main(cmd *cobra.Command, args []string) {
 	if err != nil {
 		logger.Fatal("error in database", zap.Error(err))
 	}
+
 	connection := operation.NewOperation(db, logger)
 
 	str := store.NewStore(connection)
