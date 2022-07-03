@@ -10,7 +10,7 @@ type Store struct {
 }
 
 // NewStore function.
-func NewStore(connection *operation.Operation) *Store {
+func NewStore(connection *operation.Operation) *Store { //nolint:interfacer
 	return &Store{
 		Operation: connection,
 	}
