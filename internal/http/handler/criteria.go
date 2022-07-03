@@ -7,6 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Criteria function.
 type Criteria struct {
 	Store  *store.Store
 	Logger *zap.Logger
@@ -19,6 +20,7 @@ func (c Criteria) Register(group fiber.Router) {
 	group.Delete("/:id", c.Delete)
 }
 
+// Create function.
 func (c Criteria) Create(ctx *fiber.Ctx) error {
 	criteria := new(model.Criteria)
 
@@ -41,6 +43,7 @@ func (c Criteria) Create(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusCreated)
 }
 
+// GetAll function.
 func (c Criteria) GetAll(ctx *fiber.Ctx) error {
 	categoryID := ctx.Query("category_id")
 
@@ -56,6 +59,7 @@ func (c Criteria) GetAll(ctx *fiber.Ctx) error {
 	return ctx.JSON(criteria)
 }
 
+// Delete function.
 func (c Criteria) Delete(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 

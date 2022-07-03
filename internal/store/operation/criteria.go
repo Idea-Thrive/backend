@@ -2,12 +2,11 @@ package operation
 
 import (
 	"errors"
+
 	"github.com/Idea-Thrive/backend/internal/model"
 )
 
-var (
-	errNotInsertedInCriteriaTable = errors.New("not inserted in criteria table")
-)
+var errNotInsertedInCriteriaTable = errors.New("not inserted in criteria table")
 
 // CriteriaCreate function.
 func (u *Operation) CriteriaCreate(criteria model.Criteria) error {
@@ -18,7 +17,7 @@ func (u *Operation) CriteriaCreate(criteria model.Criteria) error {
 		criteria.Name,
 	)
 	if err != nil {
-		return err //nolint:wrapcheck
+		return err
 	}
 
 	lid, _ := result.LastInsertId()
@@ -34,7 +33,6 @@ func (u *Operation) CriteriaCreate(criteria model.Criteria) error {
 // CriteriaGetAll function.
 func (u *Operation) CriteriaGetAll(categoryID string) (res []model.Criteria, err error) {
 	results, err := u.DB.Query("SELECT `name` FROM `Criteria` WHERE `category_id` = ?", categoryID)
-
 	if err != nil {
 		err = errRetrieveQueryError
 
@@ -60,7 +58,6 @@ func (u *Operation) CriteriaGetAll(categoryID string) (res []model.Criteria, err
 // CriteriaDelete function.
 func (u *Operation) CriteriaDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `Criteria` WHERE `id` = ?", id)
-
 	if err != nil {
 		return err
 	}
@@ -77,5 +74,6 @@ func (u *Operation) CriteriaDelete(id string) error {
 
 		return err
 	}
+
 	return nil
 }

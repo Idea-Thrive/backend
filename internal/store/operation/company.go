@@ -3,17 +3,15 @@ package operation
 import (
 	"errors"
 	"fmt"
-	"github.com/Idea-Thrive/backend/internal/model"
 	"time"
+
+	"github.com/Idea-Thrive/backend/internal/model"
 )
 
-var (
-	errNotInsertedInCompanyTable = errors.New("not inserted in company table")
-)
+var errNotInsertedInCompanyTable = errors.New("not inserted in company table")
 
 // CompanyCreate function.
 func (u *Operation) CompanyCreate(company model.Company) error {
-
 	queryString := "INSERT INTO `Company`(`name`, `logo_url`, " +
 		"`owner_national_id`, `owner_first_name`, `owner_last_name`, `created_at`, " +
 		"`updated_at`)  VALUES (?, ?, ?, ?, ?, ?, ?)"
@@ -28,7 +26,7 @@ func (u *Operation) CompanyCreate(company model.Company) error {
 		time.Now(),
 	)
 	if err != nil {
-		return err //nolint:wrapcheck
+		return err
 	}
 
 	lid, _ := result.LastInsertId()
@@ -70,6 +68,9 @@ func (u *Operation) CompanyGetAll(size, offset int) (res []model.Company, err er
 	queryString += fmt.Sprintf(" LIMIT %d OFFSET %d", size, offset)
 
 	companies, err := u.DB.Query(queryString)
+	if err != nil {
+		u.Logger.Error(err.Error())
+	}
 
 	for companies.Next() {
 		var companyItem model.Company
@@ -96,7 +97,7 @@ func (u *Operation) CompanyGetAll(size, offset int) (res []model.Company, err er
 }
 
 // CompanyUpdate function.
-func (u *Operation) CompanyUpdate(id string, company model.Company) error {
+func (u *Operation) CompanyUpdate(companyID string, company model.Company) error {
 	queryString := "UPDATE `Company` SET `updated_at` = ?, `name` = ?, `logo_url` = ?, `owner_national_id` = ?," +
 		" `owner_first_name` = ?, `owner_last_name` = ? WHERE `id` = ?"
 
@@ -107,7 +108,7 @@ func (u *Operation) CompanyUpdate(id string, company model.Company) error {
 		company.OwnerNationalID,
 		company.OwnerFirstName,
 		company.OwnerLastName,
-		id,
+		companyID,
 	)
 	if err != nil {
 		err = errNoRowsUpdated
@@ -121,6 +122,7 @@ func (u *Operation) CompanyUpdate(id string, company model.Company) error {
 
 		return err
 	}
+
 	if rAffected == 0 {
 		err = errNoRowsAffected
 
@@ -133,7 +135,6 @@ func (u *Operation) CompanyUpdate(id string, company model.Company) error {
 // CompanyDelete function.
 func (u *Operation) CompanyDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `Company` WHERE `id` = ?", id)
-
 	if err != nil {
 		return err
 	}
@@ -150,5 +151,6 @@ func (u *Operation) CompanyDelete(id string) error {
 
 		return err
 	}
+
 	return nil
 }

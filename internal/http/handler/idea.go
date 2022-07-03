@@ -1,12 +1,13 @@
 package handler
 
 import (
+	"strconv"
+
 	"github.com/Idea-Thrive/backend/internal/http/request"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
-	"strconv"
 )
 
 // Idea struct.
@@ -24,6 +25,7 @@ func (i Idea) Register(group fiber.Router) {
 	group.Delete("/:id", i.Delete)
 }
 
+// Create function.
 func (i Idea) Create(ctx *fiber.Ctx) error {
 	req := new(request.IdeaCreation)
 
@@ -32,7 +34,7 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "failed to parse body",
-		}) //nolint:wrapcheck
+		})
 	}
 
 	idea := model.Idea{
@@ -48,12 +50,13 @@ func (i Idea) Create(ctx *fiber.Ctx) error {
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to create idea",
-		}) //nolint:wrapcheck
+		})
 	}
 
 	return ctx.SendStatus(fiber.StatusOK)
 }
 
+// Get function.
 func (i Idea) Get(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
@@ -63,12 +66,13 @@ func (i Idea) Get(ctx *fiber.Ctx) error {
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to get idea",
-		}) //nolint:wrapcheck
+		})
 	}
 
-	return ctx.Status(fiber.StatusOK).JSON(idea) //nolint:wrapcheck
+	return ctx.Status(fiber.StatusOK).JSON(idea)
 }
 
+// GetAll function.
 func (i Idea) GetAll(ctx *fiber.Ctx) error {
 	size, _ := strconv.Atoi(ctx.Query("size", "100"))   // optional
 	offset, _ := strconv.Atoi(ctx.Query("offset", "0")) // optional
@@ -79,7 +83,7 @@ func (i Idea) GetAll(ctx *fiber.Ctx) error {
 
 		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "company_id cannot be null",
-		}) //nolint:wrapcheck
+		})
 	}
 
 	ideas, err := i.Store.IdeaGetAll(companyID, size, offset)
@@ -88,12 +92,13 @@ func (i Idea) GetAll(ctx *fiber.Ctx) error {
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to get ideas",
-		}) //nolint:wrapcheck
+		})
 	}
 
-	return ctx.Status(fiber.StatusOK).JSON(ideas) //nolint:wrapcheck
+	return ctx.Status(fiber.StatusOK).JSON(ideas)
 }
 
+// EditStatus function.
 func (i Idea) EditStatus(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
@@ -102,12 +107,13 @@ func (i Idea) EditStatus(ctx *fiber.Ctx) error {
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to change status of idea",
-		}) //nolint:wrapcheck
+		})
 	}
 
 	return ctx.SendStatus(fiber.StatusOK)
 }
 
+// Delete function.
 func (i Idea) Delete(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
@@ -116,8 +122,8 @@ func (i Idea) Delete(ctx *fiber.Ctx) error {
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to delete idea",
-		}) //nolint:wrapcheck
+		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
+	return ctx.SendStatus(fiber.StatusNoContent)
 }

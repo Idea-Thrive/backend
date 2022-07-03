@@ -9,12 +9,14 @@ import (
 	"go.uber.org/zap"
 )
 
+// App struct.
 type App struct {
 	JWT    *jwt.JWT
 	Store  *store.Store
 	Logger *zap.Logger
 }
 
+// Register function.
 func (a App) Register(app *fiber.App) {
 	auth := middleware.Auth{
 		JWT:    a.JWT,

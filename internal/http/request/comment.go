@@ -1,5 +1,6 @@
 package request
 
+// CommentCreation struct.
 type CommentCreation struct {
 	UserID      string `json:"user_id"`
 	CompanyID   string `json:"company_id"`

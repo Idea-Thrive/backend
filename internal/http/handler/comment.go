@@ -10,6 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Comment function.
 type Comment struct {
 	Store  *store.Store
 	Logger *zap.Logger
@@ -22,6 +23,7 @@ func (c Comment) Register(group fiber.Router) {
 	group.Delete("/:id", c.Delete)
 }
 
+// Create function.
 func (c Comment) Create(ctx *fiber.Ctx) error {
 	comment := new(model.Comment)
 	if err := ctx.BodyParser(comment); err != nil {
@@ -46,6 +48,7 @@ func (c Comment) Create(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(fiber.StatusCreated)
 }
 
+// GetAll function.
 func (c Comment) GetAll(ctx *fiber.Ctx) error {
 	size, _ := strconv.Atoi(ctx.Query("size", "100"))                  // optional
 	offset, _ := strconv.Atoi(ctx.Query("offset", "0"))                // optional
@@ -72,6 +75,7 @@ func (c Comment) GetAll(ctx *fiber.Ctx) error {
 	return ctx.JSON(comments)
 }
 
+// Delete function.
 func (c Comment) Delete(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 

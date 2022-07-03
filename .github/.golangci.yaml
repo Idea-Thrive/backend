@@ -45,6 +45,10 @@ issues:
         - tagliatelle
         - gci
         - exhaustivestruct
+        - forcetypeassert
+        - rowserrcheck
+        - wrapcheck
+        - sqlclosecheck
     - path: _test\.go
       linters:
         - lll

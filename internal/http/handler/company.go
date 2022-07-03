@@ -1,15 +1,17 @@
 package handler
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/Idea-Thrive/backend/internal/http/request"
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
-	"strconv"
-	"time"
 )
 
+// Company function.
 type Company struct {
 	Store  *store.Store
 	Logger *zap.Logger
@@ -24,13 +26,14 @@ func (c Company) Register(group fiber.Router) {
 	group.Put("/:id", c.Update)
 }
 
+// Create function.
 func (c Company) Create(ctx *fiber.Ctx) error {
 	req := new(request.CompanyCreation)
 
 	if err := ctx.BodyParser(req); err != nil {
 		c.Logger.Error("failed to parse req", zap.Error(err))
 
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
@@ -48,14 +51,15 @@ func (c Company) Create(ctx *fiber.Ctx) error {
 	if err := c.Store.CompanyCreate(company); err != nil {
 		c.Logger.Error("failed to create company", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusOK) //nolint:wrapcheck
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
+// Get function.
 func (c Company) Get(ctx *fiber.Ctx) error {
 	id := ctx.AllParams()["id"]
 
@@ -63,24 +67,24 @@ func (c Company) Get(ctx *fiber.Ctx) error {
 	if err != nil {
 		c.Logger.Error("failed to get company", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.JSON(company) //nolint:wrapcheck
+	return ctx.JSON(company)
 }
 
 // Update function.
 func (c Company) Update(ctx *fiber.Ctx) error {
-	id := ctx.AllParams()["id"]
+	companyID := ctx.AllParams()["companyID"]
 
 	req := new(request.CompanyCreation)
 
 	if err := ctx.BodyParser(req); err != nil {
 		c.Logger.Error("failed to parse req", zap.Error(err))
 
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
@@ -95,16 +99,15 @@ func (c Company) Update(ctx *fiber.Ctx) error {
 		UpdatedAt:       time.Now().String(),
 	}
 
-	if err := c.Store.CompanyUpdate(id, company); err != nil {
-
+	if err := c.Store.CompanyUpdate(companyID, company); err != nil {
 		c.Logger.Error("failed to update company", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusOK) //nolint:wrapcheck
+	return ctx.SendStatus(fiber.StatusOK)
 }
 
 // Delete function.
@@ -114,14 +117,15 @@ func (c Company) Delete(ctx *fiber.Ctx) error {
 	if err := c.Store.CompanyDelete(id); err != nil {
 		c.Logger.Error("failed to delete company", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
+	return ctx.SendStatus(fiber.StatusNoContent)
 }
 
+// GetAll function.
 func (c Company) GetAll(ctx *fiber.Ctx) error {
 	size, _ := strconv.Atoi(ctx.Query("size", "100"))   // optional
 	offset, _ := strconv.Atoi(ctx.Query("offset", "0")) // optional
@@ -132,8 +136,8 @@ func (c Company) GetAll(ctx *fiber.Ctx) error {
 
 		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": "failed to get companies",
-		}) //nolint:wrapcheck
+		})
 	}
 
-	return ctx.Status(fiber.StatusOK).JSON(companies) //nolint:wrapcheck
+	return ctx.Status(fiber.StatusOK).JSON(companies)
 }

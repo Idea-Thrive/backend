@@ -4,6 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+
+	// mysql driver.
 	_ "github.com/go-sql-driver/mysql"
 	"go.uber.org/zap"
 )
@@ -16,7 +18,7 @@ func New(cfg Config, log *zap.Logger) (db *sql.DB, err error) {
 			zap.String("error", err.Error()),
 		)
 
-		return db, err //nolint:wrapcheck
+		return db, err
 	}
 
 	ctx, cancel := context.WithCancel(context.Background())
@@ -28,12 +30,12 @@ func New(cfg Config, log *zap.Logger) (db *sql.DB, err error) {
 			zap.String("error", err.Error()),
 		)
 
-		return db, err //nolint:wrapcheck
+		return db, err
 	}
 
 	cancel()
 
-	return db, err //nolint:wrapcheck
+	return db, err
 }
 
 // CreateDataSource .

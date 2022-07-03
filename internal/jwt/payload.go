@@ -2,6 +2,7 @@ package jwt
 
 import "time"
 
+// Payload function.
 type Payload struct {
 	Email     string    `json:"email,omitempty"`
 	IssuedAt  time.Time `json:"issued_at"`

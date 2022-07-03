@@ -1,8 +1,9 @@
 package handler
 
 import (
-	"github.com/Idea-Thrive/backend/internal/http/request"
 	"time"
+
+	"github.com/Idea-Thrive/backend/internal/http/request"
 
 	"github.com/Idea-Thrive/backend/internal/model"
 	"github.com/Idea-Thrive/backend/internal/store"
@@ -10,6 +11,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Category struct.
 type Category struct {
 	Store  *store.Store
 	Logger *zap.Logger
@@ -23,6 +25,7 @@ func (c Category) Register(group fiber.Router) {
 	group.Delete("/:id", c.Delete)
 }
 
+// Create function.
 func (c Category) Create(ctx *fiber.Ctx) error {
 	req := new(request.CategoryCreation)
 
@@ -52,9 +55,10 @@ func (c Category) Create(ctx *fiber.Ctx) error {
 
 	c.Logger.Info("category created", zap.Any("category", category))
 
-	return ctx.SendStatus(fiber.StatusCreated) //nolint:wrapcheck
+	return ctx.SendStatus(fiber.StatusCreated)
 }
 
+// Get function.
 func (c Category) Get(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
@@ -67,16 +71,17 @@ func (c Category) Get(ctx *fiber.Ctx) error {
 		})
 	}
 
-	return ctx.JSON(category) //nolint:wrapcheck
+	return ctx.JSON(category)
 }
 
+// GetAll function.
 func (c Category) GetAll(ctx *fiber.Ctx) error {
 	companyID := ctx.Query("company_id")
 
 	if len(companyID) == 0 {
 		c.Logger.Error("company_id is required")
 
-		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusBadRequest).JSON(fiber.Map{
 			"error": "company_id is required",
 		})
 	}
@@ -85,24 +90,25 @@ func (c Category) GetAll(ctx *fiber.Ctx) error {
 	if err != nil {
 		c.Logger.Error("failed to get categories", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.JSON(categories) //nolint:wrapcheck
+	return ctx.JSON(categories)
 }
 
+// Delete function.
 func (c Category) Delete(ctx *fiber.Ctx) error {
 	id := ctx.Params("id")
 
 	if err := c.Store.CategoryDelete(id); err != nil {
 		c.Logger.Error("failed to delete category", zap.Error(err))
 
-		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{ //nolint:wrapcheck
+		return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
 			"error": err.Error(),
 		})
 	}
 
-	return ctx.SendStatus(fiber.StatusNoContent) //nolint:wrapcheck
+	return ctx.SendStatus(fiber.StatusNoContent)
 }
