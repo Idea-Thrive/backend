@@ -25,7 +25,6 @@ var (
 
 // UserCreate function.
 func (u *Operation) UserCreate(user model.User) (err error) {
-
 	currEmail := ""
 	errRetrieve := u.DB.QueryRow("SELECT email from User WHERE email = ?", user.Email).Scan(&currEmail)
 
@@ -39,7 +38,8 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 		u.Logger.Error("user with this email doesn't exist")
 	}
 
-	queryString := "INSERT INTO `User` (`first_name`, `last_name`, `email`, `password`, `phone_number`, `photo_url`, `company_id`, `personnel_id`," +
+	queryString := "INSERT INTO `User` (`first_name`, `last_name`, `email`, `password`," +
+		" `phone_number`, `photo_url`, `company_id`, `personnel_id`," +
 		" `gender`, `role`, `created_at`, `updated_at`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
 
 	result, err := u.DB.Exec(queryString,
@@ -73,7 +73,8 @@ func (u *Operation) UserCreate(user model.User) (err error) {
 // UserGet function.
 func (u *Operation) UserGet(id string) (user model.User, err error) {
 	errRetrieve := u.DB.QueryRow("SELECT `id`, `first_name`, `last_name`,"+
-		" `email`, `phone_number`, `photo_url`, `company_id`, `personnel_id`, `gender`, `role` FROM `User` WHERE `id` = ?", id).Scan(
+		" `email`, `phone_number`, `photo_url`, `company_id`, `personnel_id`,"+
+		" `gender`, `role` FROM `User` WHERE `id` = ?", id).Scan(
 		&user.ID,
 		&user.FirstName,
 		&user.LastName,
@@ -154,10 +155,10 @@ func (u *Operation) UserGetByUsername(username string) (user model.User, err err
 }
 
 // UserUpdate function.
-func (u *Operation) UserUpdate(id string, user model.User) error {
-
-	queryString := "UPDATE `User` SET `updated_at` = ?, `first_name` = ?, `last_name` = ?, `email` = ?, `password` = ?, `phone_number` = ?," +
-		" `photo_url` = ?, `company_id` = ?, `personnel_id` = ?, `gender` = ?, `role` = ? WHERE `id` = ?"
+func (u *Operation) UserUpdate(userID string, user model.User) error {
+	queryString := "UPDATE `User` SET `updated_at` = ?, `first_name` = ?, `last_name` = ?," +
+		" `email` = ?, `password` = ?, `phone_number` = ?, `photo_url` = ?, `company_id` = ?," +
+		" `personnel_id` = ?, `gender` = ?, `role` = ? WHERE `id` = ?"
 
 	res, err := u.DB.Exec(queryString,
 		time.Now(),
@@ -171,7 +172,7 @@ func (u *Operation) UserUpdate(id string, user model.User) error {
 		user.PersonnelID,
 		user.Gender,
 		user.Role,
-		id,
+		userID,
 	)
 	if err != nil {
 		err = errNoRowsUpdated
@@ -185,6 +186,7 @@ func (u *Operation) UserUpdate(id string, user model.User) error {
 
 		return err
 	}
+
 	if rAffected == 0 {
 		err = errNoRowsAffected
 
@@ -197,7 +199,6 @@ func (u *Operation) UserUpdate(id string, user model.User) error {
 // UserDelete function.
 func (u *Operation) UserDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `User` WHERE `id` = ?", id)
-
 	if err != nil {
 		return err
 	}
@@ -214,5 +215,6 @@ func (u *Operation) UserDelete(id string) error {
 
 		return err
 	}
+
 	return nil
 }

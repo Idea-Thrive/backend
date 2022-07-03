@@ -2,8 +2,9 @@ package operation
 
 import (
 	"errors"
-	"github.com/Idea-Thrive/backend/internal/model"
 	"time"
+
+	"github.com/Idea-Thrive/backend/internal/model"
 )
 
 var (
@@ -39,7 +40,8 @@ func (u *Operation) CategoryCreate(category model.Category) (err error) {
 
 // CategoryGet function.
 func (u *Operation) CategoryGet(id string) (category model.Category, err error) {
-	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `color`, `created_at`, `updated_at` FROM `Category` WHERE `id` = ?", id).Scan(
+	errRetrieve := u.DB.QueryRow("SELECT `company_id`, `name`, `color`,"+
+		" `created_at`, `updated_at` FROM `Category` WHERE `id` = ?", id).Scan(
 		&category.CompanyID,
 		&category.Name,
 		&category.Color,
@@ -48,7 +50,7 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 	)
 
 	if errRetrieve != nil {
-		return model.Category{}, err
+		return model.Category{}, errRetrieve
 	}
 
 	return category, nil
@@ -58,7 +60,6 @@ func (u *Operation) CategoryGet(id string) (category model.Category, err error) 
 func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err error) {
 	results, err := u.DB.Query("SELECT `id`, `name`, `color`, `created_at`, `updated_at` "+
 		"FROM `Category` WHERE `company_id` = ?", companyID)
-
 	if err != nil {
 		err = errRetrieveQueryError
 
@@ -88,7 +89,6 @@ func (u *Operation) CategoryGetAll(companyID string) (res []model.Category, err 
 // CategoryDelete function.
 func (u *Operation) CategoryDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `Category` WHERE `id` = ?", id)
-
 	if err != nil {
 		return err
 	}
@@ -105,5 +105,6 @@ func (u *Operation) CategoryDelete(id string) error {
 
 		return err
 	}
+
 	return nil
 }

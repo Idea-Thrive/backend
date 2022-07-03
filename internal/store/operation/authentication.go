@@ -2,7 +2,6 @@ package operation
 
 import (
 	"errors"
-	"fmt"
 )
 
 var (
@@ -12,9 +11,8 @@ var (
 
 // Login function.
 func (u *Operation) Login(email, password string) (bool, error) {
-	fmt.Println("email: ", email)
-	fmt.Println("password: ", password)
 	var realPassword string
+
 	errRetrieve := u.DB.QueryRow("SELECT `password` FROM `User` WHERE `email` = ?", email).Scan(
 		&realPassword,
 	)

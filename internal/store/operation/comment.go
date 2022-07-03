@@ -3,13 +3,12 @@ package operation
 import (
 	"errors"
 	"fmt"
-	"github.com/Idea-Thrive/backend/internal/model"
 	"time"
+
+	"github.com/Idea-Thrive/backend/internal/model"
 )
 
-var (
-	errNotInsertedInCommentTable = errors.New("not inserted in comment table")
-)
+var errNotInsertedInCommentTable = errors.New("not inserted in comment table")
 
 // CommentCreate function.
 func (u *Operation) CommentCreate(comment model.Comment) (err error) {
@@ -42,7 +41,8 @@ func (u *Operation) CommentCreate(comment model.Comment) (err error) {
 
 // CommentGetAll function.
 func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset int) (res []model.Comment, err error) {
-	queryString := "SELECT  `id`, `company_id`, `user_id`, `score`, `description`, `created_at`, `updated_at` FROM `Comment` WHERE 1"
+	queryString := "SELECT  `id`, `company_id`, `user_id`, `score`, `description`," +
+		" `created_at`, `updated_at` FROM `Comment` WHERE 1"
 
 	if ideaID != "" {
 		queryString += fmt.Sprintf(" AND idea_id = %s", ideaID)
@@ -85,7 +85,6 @@ func (u *Operation) CommentGetAll(ideaID string, scoreOnly bool, size, offset in
 // CommentDelete function.
 func (u *Operation) CommentDelete(id string) error {
 	exec, err := u.DB.Exec("DELETE FROM `Comment` WHERE `id` = ?", id)
-
 	if err != nil {
 		return err
 	}
@@ -102,5 +101,6 @@ func (u *Operation) CommentDelete(id string) error {
 
 		return err
 	}
+
 	return nil
 }
